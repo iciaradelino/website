@@ -1,0 +1,107 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  padding: clamp(2.75rem, 5vw, 4rem) var(--page-pad-x);
+  overflow: hidden;
+  color: #fff;
+  scroll-margin-top: 64px;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    url("/roots.jpg") center / cover no-repeat;
+}
+
+.footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.78) 100%
+    );
+}
+
+.col {
+  position: relative;
+  min-width: 0;
+}
+
+.brand {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.label {
+  margin: 0 0 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.contact,
+.links,
+.legal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+  letter-spacing: 0.03em;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.contact a,
+.links a {
+  width: fit-content;
+  transition: color 0.25s ease;
+}
+
+.contact a:hover,
+.links a:hover {
+  color: var(--accent);
+}
+
+.contact a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.contact p,
+.legal p {
+  margin: 0;
+}
+
+.credit {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  transition: color 0.25s ease;
+}
+
+.credit:hover {
+  color: var(--accent);
+}
+
+@media (min-width: 900px) {
+  .footer {
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+    gap: 2rem;
+  }
+}
