@@ -32,7 +32,11 @@ export default function HomePage() {
               <span className={styles.heroLine}>GONZALO</span>
             </h1>
             <p className={styles.heroSubtitle}>
-              relatos entre el bosque y la memoria
+              <span className={styles.quote}>
+                “Words are never &apos;only words&apos;; they matter because they
+                define the contours of what we can do.”
+              </span>
+              <span className={styles.quoteAuthor}>― Slavoj Žižek (el puto amo)</span>
             </p>
           </div>
         </section>
