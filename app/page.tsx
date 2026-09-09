@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
-import { stories } from "@/lib/stories";
+import { StoriesGrid } from "@/components/StoryCard";
+import { stories, storyPath } from "@/lib/stories";
 import styles from "./page.module.css";
 
 export default function HomePage() {
   const [view, setView] = useState<"grid" | "list">("grid");
+
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView();
+  }, []);
 
   return (
     <>
@@ -91,25 +99,7 @@ export default function HomePage() {
               className={`${styles.viewPanel} ${styles.viewEnter}`}
             >
               {view === "grid" ? (
-                <ul className={styles.grid}>
-                  {stories.map((story, i) => (
-                    <Reveal
-                      key={story.id}
-                      as="li"
-                      className={styles.card}
-                      delayMs={i * 80}
-                    >
-                      <h3
-                        className={styles.cardTitle}
-                        style={{ color: story.accent }}
-                      >
-                        {story.title}
-                      </h3>
-                      <div className={styles.thumb} aria-hidden />
-                      <p className={styles.cardDesc}>{story.summary}</p>
-                    </Reveal>
-                  ))}
-                </ul>
+                <StoriesGrid stories={stories} />
               ) : (
                 <ul className={styles.list}>
                   {stories.map((story, index) => (
@@ -120,7 +110,7 @@ export default function HomePage() {
                       delayMs={index * 70}
                     >
                       {index > 0 ? <hr className={styles.divider} /> : null}
-                      <div className={styles.listRow}>
+                      <Link href={storyPath(story.slug)} className={styles.listRow}>
                         <h3
                           className={styles.listTitle}
                           style={{ color: story.accent }}
@@ -129,7 +119,7 @@ export default function HomePage() {
                         </h3>
                         <div className={styles.listThumb} aria-hidden />
                         <p className={styles.listDesc}>{story.description}</p>
-                      </div>
+                      </Link>
                     </Reveal>
                   ))}
                 </ul>

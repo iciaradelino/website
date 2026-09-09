@@ -1,15 +1,30 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, type MouseEvent } from "react";
 import styles from "./Header.module.css";
 
 type SectionId = "home" | "stories" | "about" | "contact";
 
 export function Header() {
-  const [active, setActive] = useState<SectionId>("home");
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [active, setActive] = useState<SectionId>(isHome ? "home" : "stories");
+  const [scrolled, setScrolled] = useState(!isHome);
 
   useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40 || !isHome);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    if (!isHome) {
+      setActive("stories");
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+
     const ids: SectionId[] = ["home", "stories", "about", "contact"];
     const elements = ids
       .map((id) => document.getElementById(id))
@@ -29,17 +44,14 @@ export function Header() {
 
     elements.forEach((el) => observer.observe(el));
 
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [isHome]);
 
   const scrollToFooter = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!isHome) return;
     event.preventDefault();
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     window.history.replaceState(null, "", "#contact");
@@ -50,29 +62,29 @@ export function Header() {
     <header
       className={`${styles.header} ${scrolled ? styles.scrolled : styles.top}`}
     >
-      <a href="#home" className={styles.logo}>
+      <Link href={isHome ? "#home" : "/"} className={styles.logo}>
         GG
-      </a>
+      </Link>
       <nav className={styles.nav} aria-label="principal">
-        <a
-          href="#stories"
+        <Link
+          href={isHome ? "#stories" : "/#stories"}
           className={`${styles.link} ${active === "stories" ? styles.active : ""}`}
         >
           historias
-        </a>
-        <a
-          href="#about"
+        </Link>
+        <Link
+          href={isHome ? "#about" : "/#about"}
           className={`${styles.link} ${active === "about" ? styles.active : ""}`}
         >
           sobre mí
-        </a>
-        <a
-          href="#contact"
+        </Link>
+        <Link
+          href={isHome ? "#contact" : "/#contact"}
           onClick={scrollToFooter}
           className={`${styles.link} ${active === "contact" ? styles.active : ""}`}
         >
           contacto
-        </a>
+        </Link>
       </nav>
     </header>
   );

@@ -1,0 +1,83 @@
+.main {
+  padding-top: 64px;
+}
+
+.article {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
+.inner {
+  width: 100%;
+  padding: 0 var(--page-pad-x);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+.date {
+  margin: 0.9rem 0 0;
+  font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  max-width: 42rem;
+}
+
+.body p {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+}
+
+.note {
+  max-width: 42rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.noteRule {
+  margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.noteLabel {
+  margin: 0 0 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.noteText {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.others {
+  background: #000;
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
+.sectionTitle {
+  margin: 0 0 clamp(2.25rem, 4.5vw, 3.75rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
