@@ -8,7 +8,8 @@
   --placeholder: #d9d9d9;
   --nav-tint: rgba(255, 255, 255, 0.3);
   --footer-bg: #000;
-  --font: "Epilogue", system-ui, sans-serif;
+  --font: var(--font-sans), "Source Sans 3", system-ui, sans-serif;
+  --font-serif: var(--font-literata), "Literata", "Palatino Linotype", Palatino, serif;
   --page-pad-x: clamp(2rem, 8vw, 7.5rem);
 }
 
@@ -40,6 +41,12 @@ body {
   color: var(--text);
   background: linear-gradient(to left, #000, var(--bg-mid));
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
 }
 
 a {

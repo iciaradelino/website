@@ -52,8 +52,8 @@
   color: #fff;
   font-weight: 700;
   font-size: clamp(2.1rem, 6vw, 5.25rem);
-  letter-spacing: 0.04em;
-  line-height: 1.05;
+  letter-spacing: 0.06em;
+  line-height: 1.08;
   max-width: 14ch;
 }
 
@@ -117,7 +117,7 @@
   margin: 0;
   font-size: clamp(1.6rem, 3.5vw, 2.5rem);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .viewBtn {
@@ -188,7 +188,7 @@
   margin: 0;
   font-size: clamp(1.2rem, 2.4vw, 1.85rem);
   font-weight: 400;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   text-align: center;
   transition: font-weight 0.2s ease;
 }
@@ -250,9 +250,9 @@
 
 .copy p {
   margin: 0;
-  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-  letter-spacing: 0.04em;
-  line-height: 1.45;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  letter-spacing: 0.01em;
+  line-height: 1.6;
 }
 
 .copy strong {

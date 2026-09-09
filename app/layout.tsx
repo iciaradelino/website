@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Epilogue } from "next/font/google";
+import { Literata, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-const epilogue = Epilogue({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "700"],
-  variable: "--font-epilogue",
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const literata = Literata({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-literata",
   display: "swap",
 });
 
@@ -20,8 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={epilogue.className}>{children}</body>
+    <html
+      lang="es"
+      className={`${sourceSans.variable} ${literata.variable}`}
+    >
+      <body className={sourceSans.className}>{children}</body>
     </html>
   );
 }
