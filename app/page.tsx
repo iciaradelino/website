@@ -1,17 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, type ReactNode } from "react";
 import Link from "next/link";
+import { CortoFeature } from "@/components/Corto";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PhotoGrid } from "@/components/PhotoGrid";
 import { Reveal } from "@/components/Reveal";
+import { SectionRule } from "@/components/SectionRule";
 import { StoriesGrid } from "@/components/StoryCard";
-import { stories, storyPath } from "@/lib/stories";
+import { featuredCorto } from "@/lib/cortos";
+import { photos } from "@/lib/photos";
+import { stories } from "@/lib/stories";
+import ui from "@/components/ui.module.css";
 import styles from "./page.module.css";
 
-export default function HomePage() {
-  const [view, setView] = useState<"grid" | "list">("grid");
+function SectionHeading({
+  title,
+  href,
+  linkLabel,
+}: {
+  title: ReactNode;
+  href: string;
+  linkLabel: string;
+}) {
+  return (
+    <div className={ui.headingRow}>
+      <Reveal as="h2" className={ui.sectionTitle}>
+        {title}
+      </Reveal>
+      <Reveal delayMs={120}>
+        <Link href={href} className={ui.pill}>
+          <span>{linkLabel}</span>
+          <svg className={ui.pillIcon} viewBox="0 0 24 24" aria-hidden>
+            <path d="M5 11h10.6l-4.3-4.3 1.4-1.4L19.4 12l-6.7 6.7-1.4-1.4 4.3-4.3H5z" />
+          </svg>
+        </Link>
+      </Reveal>
+    </div>
+  );
+}
 
+export default function HomePage() {
   useEffect(() => {
     const id = window.location.hash.slice(1);
     if (!id) return;
@@ -49,92 +79,36 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="stories" className={styles.section}>
-          <div className={styles.inner}>
-            <div className={styles.headingRow}>
-              <Reveal as="h2" className={styles.sectionTitle}>
-                Historias de Gonzalo
-              </Reveal>
-              <Reveal delayMs={120}>
-                <button
-                  type="button"
-                  className={styles.viewBtn}
-                  onClick={() => setView((v) => (v === "grid" ? "list" : "grid"))}
-                  aria-pressed={view === "list"}
-                  aria-label={
-                    view === "grid"
-                      ? "Cambiar a vista de lista"
-                      : "Cambiar a vista de cuadrícula"
-                  }
-                >
-                  <span>vista</span>
-                  {view === "grid" ? (
-                    <svg
-                      className={styles.viewIcon}
-                      viewBox="0 0 24 24"
-                      aria-hidden
-                    >
-                      <rect x="3" y="3" width="7" height="7" rx="1" />
-                      <rect x="14" y="3" width="7" height="7" rx="1" />
-                      <rect x="3" y="14" width="7" height="7" rx="1" />
-                      <rect x="14" y="14" width="7" height="7" rx="1" />
-                    </svg>
-                  ) : (
-                    <svg
-                      className={styles.viewIcon}
-                      viewBox="0 0 24 24"
-                      aria-hidden
-                    >
-                      <rect x="3" y="4" width="18" height="3" rx="1" />
-                      <rect x="3" y="10.5" width="18" height="3" rx="1" />
-                      <rect x="3" y="17" width="18" height="3" rx="1" />
-                    </svg>
-                  )}
-                </button>
-              </Reveal>
-            </div>
-
-            <div
-              key={view}
-              className={`${styles.viewPanel} ${styles.viewEnter}`}
-            >
-              {view === "grid" ? (
-                <StoriesGrid stories={stories} />
-              ) : (
-                <ul className={styles.list}>
-                  {stories.map((story, index) => (
-                    <Reveal
-                      key={story.id}
-                      as="li"
-                      className={styles.listItem}
-                      delayMs={index * 70}
-                    >
-                      {index > 0 ? <hr className={styles.divider} /> : null}
-                      <Link href={storyPath(story.slug)} className={styles.listRow}>
-                        <h3
-                          className={styles.listTitle}
-                          style={{ color: story.accent }}
-                        >
-                          {story.title}
-                        </h3>
-                        <div className={styles.listThumb} aria-hidden />
-                        <p className={styles.listDesc}>{story.description}</p>
-                      </Link>
-                    </Reveal>
-                  ))}
-                </ul>
-              )}
-            </div>
+        <section id="stories" className={ui.section}>
+          <div className={ui.inner}>
+            <SectionHeading title="Historias" href="/historias" linkLabel="ver todas" />
+            <StoriesGrid stories={stories.slice(0, 3)} />
           </div>
         </section>
 
-        <div className={styles.sectionRuleWrap} aria-hidden>
-          <hr className={styles.sectionRule} />
-        </div>
+        <SectionRule />
 
-        <section id="about" className={`${styles.section} ${styles.aboutSection}`}>
-          <div className={`${styles.inner} ${styles.aboutGrid}`}>
-            <Reveal as="h2" className={styles.sectionTitle}>
+        <section id="photos" className={ui.section}>
+          <div className={ui.inner}>
+            <SectionHeading title="Fotos" href="/fotos" linkLabel="ver todas" />
+            <PhotoGrid photos={photos.slice(0, 3)} />
+          </div>
+        </section>
+
+        <SectionRule />
+
+        <section id="cortos" className={ui.section}>
+          <div className={ui.inner}>
+            <SectionHeading title="Cortos" href="/cortos" linkLabel="ver todos" />
+            <CortoFeature corto={featuredCorto} />
+          </div>
+        </section>
+
+        <SectionRule />
+
+        <section id="about" className={`${ui.section} ${styles.aboutSection}`}>
+          <div className={`${ui.inner} ${styles.aboutGrid}`}>
+            <Reveal as="h2" className={ui.sectionTitle}>
               Sobre mí
             </Reveal>
             <div className={styles.copy}>
@@ -155,9 +129,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className={styles.sectionRuleWrap} aria-hidden>
-          <hr className={styles.sectionRule} />
-        </div>
+        <SectionRule />
 
         <Reveal>
           <Footer />

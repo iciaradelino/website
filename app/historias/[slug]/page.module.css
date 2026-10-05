@@ -27,6 +27,22 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+.epigraph {
+  margin: 0.9rem 0 0;
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.break {
+  text-align: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin: 0.75rem 0;
+}
+
 .body {
   display: flex;
   flex-direction: column;
@@ -37,6 +53,7 @@
 
 .body p {
   margin: 0;
+  white-space: pre-line;
   font-size: clamp(1.05rem, 1.55vw, 1.22rem);
   letter-spacing: 0.01em;
   line-height: 1.7;

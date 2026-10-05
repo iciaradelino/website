@@ -28,7 +28,11 @@ export function StoryCard({ story, delayMs = 0 }: StoryCardProps) {
   return (
     <Reveal as="li" className={styles.card} delayMs={delayMs}>
       <Link href={storyPath(story.slug)} className={styles.link}>
-        <h3 className={styles.cardTitle} style={{ color: story.accent }}>
+        <h3
+          className={styles.cardTitle}
+          style={{ color: story.accent }}
+          lang={story.lang}
+        >
           {story.title}
         </h3>
         <div className={styles.thumb} aria-hidden />

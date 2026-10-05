@@ -1,0 +1,96 @@
+.viewPanel {
+  min-height: 12rem;
+}
+
+.viewEnter {
+  animation: fadeSlide 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0;
+}
+
+.listRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.listTitle {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transition: font-weight 0.2s ease;
+}
+
+.listThumb {
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 364 / 282;
+  background: var(--placeholder);
+  justify-self: center;
+  transition: transform 0.35s ease;
+}
+
+.listItem:hover .listTitle {
+  font-weight: 700;
+}
+
+.listItem:hover .listThumb {
+  transform: scale(1.02);
+}
+
+.listDesc {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 960px) {
+  .listRow {
+    grid-template-columns: minmax(160px, 240px) 280px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .listTitle {
+    text-align: left;
+  }
+
+  .listThumb {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewEnter {
+    animation: none;
+  }
+
+  .listThumb {
+    transition: none;
+  }
+}

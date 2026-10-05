@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Footer.module.css";
 
 export function Footer() {
@@ -20,9 +21,11 @@ export function Footer() {
       </div>
       <nav className={`${styles.col} ${styles.links}`} aria-label="pie de página">
         <p className={styles.label}>Navegación</p>
-        <a href="/#home">Inicio</a>
-        <a href="/#stories">Historias</a>
-        <a href="/#about">Sobre mí</a>
+        <Link href="/">Inicio</Link>
+        <Link href="/historias">Historias</Link>
+        <Link href="/fotos">Fotos</Link>
+        <Link href="/cortos">Cortos</Link>
+        <Link href="/#about">Sobre mí</Link>
       </nav>
       <div className={`${styles.col} ${styles.legal}`}>
         <p className={styles.label}>Créditos</p>

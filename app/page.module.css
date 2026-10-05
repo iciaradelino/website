@@ -95,144 +95,12 @@
   opacity: 0.85;
 }
 
-.section {
-  scroll-margin-top: 64px;
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
-}
-
-.inner {
-  width: 100%;
-  padding: 0 var(--page-pad-x);
-}
-
-.headingRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem);
-}
-
-.sectionTitle {
-  margin: 0;
-  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.viewBtn {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  min-width: 96px;
-  height: 42px;
-  padding: 0 1.1rem;
-  border-radius: 50px;
-  background: var(--accent);
-  color: #000;
-  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
-  letter-spacing: 0.04em;
-  transition:
-    transform 0.25s ease,
-    filter 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.viewIcon {
-  width: 1.05rem;
-  height: 1.05rem;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.viewBtn:hover {
-  filter: brightness(1.06);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(225, 226, 137, 0.25);
-}
-
-.viewBtn:active {
-  transform: translateY(0);
-}
-
-.viewPanel {
-  min-height: 12rem;
-}
-
-.viewEnter {
-  animation: fadeSlide 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.divider {
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-  margin: clamp(1.5rem, 3vw, 2.25rem) 0;
-}
-
-.listRow {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  align-items: start;
-}
-
-.listTitle {
-  margin: 0;
-  font-size: clamp(1.2rem, 2.4vw, 1.85rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  text-align: center;
-  transition: font-weight 0.2s ease;
-}
-
-.listThumb {
-  width: 100%;
-  max-width: 280px;
-  aspect-ratio: 364 / 282;
-  background: var(--placeholder);
-  justify-self: center;
-  transition: transform 0.35s ease;
-}
-
-.listItem:hover .listTitle {
-  font-weight: 700;
-}
-
-.listItem:hover .listThumb {
-  transform: scale(1.02);
-}
-
-.listDesc {
-  margin: 0;
-  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-  letter-spacing: 0.04em;
-  line-height: 1.45;
-}
-
-.sectionRuleWrap {
-  padding: 0 var(--page-pad-x);
-}
-
-.sectionRule {
-  margin: 0;
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
-}
-
 .aboutSection {
   background: var(--accent);
   color: #0a0a0a;
 }
 
-.aboutSection .sectionTitle {
+.aboutSection h2 {
   color: #0a0a0a;
 }
 
@@ -267,32 +135,7 @@
   }
 }
 
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(0.75rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (min-width: 960px) {
-  .listRow {
-    grid-template-columns: minmax(160px, 240px) 280px 1fr;
-    gap: 1.5rem;
-    align-items: start;
-  }
-
-  .listTitle {
-    text-align: left;
-  }
-
-  .listThumb {
-    justify-self: start;
-  }
-
   .aboutGrid {
     grid-template-columns: minmax(140px, 220px) 1fr;
     align-items: start;
@@ -301,8 +144,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .heroLine,
-  .heroSubtitle,
-  .viewEnter {
+  .heroSubtitle {
     animation: none;
   }
 
@@ -310,10 +152,5 @@
   .heroSubtitle {
     opacity: 1;
     transform: none;
-  }
-
-  .listThumb,
-  .viewBtn {
-    transition: none;
   }
 }
