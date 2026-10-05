@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { CortoFeature } from "@/components/Corto";
 import { Footer } from "@/components/Footer";
@@ -10,7 +10,7 @@ import { Reveal } from "@/components/Reveal";
 import { SectionRule } from "@/components/SectionRule";
 import { StoriesGrid } from "@/components/StoryCard";
 import { featuredCorto } from "@/lib/cortos";
-import { photos } from "@/lib/photos";
+import { photos, pickRandomPhotos, type Photo } from "@/lib/photos";
 import { stories } from "@/lib/stories";
 import ui from "@/components/ui.module.css";
 import styles from "./page.module.css";
@@ -42,6 +42,13 @@ function SectionHeading({
 }
 
 export default function HomePage() {
+  // Se eligen en el navegador para que cambien en cada visita (la página es estática).
+  const [featuredPhotos, setFeaturedPhotos] = useState<Photo[] | null>(null);
+
+  useEffect(() => {
+    setFeaturedPhotos(pickRandomPhotos(photos, 3));
+  }, []);
+
   useEffect(() => {
     const id = window.location.hash.slice(1);
     if (!id) return;
@@ -91,7 +98,11 @@ export default function HomePage() {
         <section id="photos" className={ui.section}>
           <div className={ui.inner}>
             <SectionHeading title="Fotos" href="/fotos" linkLabel="ver todas" />
-            <PhotoGrid photos={photos.slice(0, 3)} />
+            {featuredPhotos ? (
+              <PhotoGrid photos={featuredPhotos} layout="row" />
+            ) : (
+              <div className={styles.photosPending} aria-hidden />
+            )}
           </div>
         </section>
 

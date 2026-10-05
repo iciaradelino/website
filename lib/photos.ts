@@ -206,3 +206,13 @@ export const photos: Photo[] = [
     height: 900,
   },
 ];
+
+/** Devuelve `count` fotos con imagen, elegidas al azar y sin repetir. */
+export function pickRandomPhotos(list: Photo[], count: number) {
+  const pool = list.filter((photo) => photo.src);
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, count);
+}

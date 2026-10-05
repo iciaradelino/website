@@ -1,0 +1,8 @@
+.soon {
+  min-height: calc(100dvh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem var(--page-pad-x);
+  text-align: center;
+}

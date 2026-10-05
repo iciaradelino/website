@@ -17,9 +17,38 @@
   min-width: 0;
 }
 
+/* Fila de alturas iguales: el ancho de cada foto lo fija su "flex" en línea. */
+.row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+@media (min-width: 720px) {
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+}
+
 .figure {
   margin: 0;
   overflow: hidden;
+}
+
+.zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  cursor: zoom-in;
+}
+
+.zoom:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .photo,

@@ -23,6 +23,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Bloquea el scroll de la página mientras hay una foto ampliada. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 html,
 body {
   margin: 0;

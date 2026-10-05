@@ -95,6 +95,11 @@
   opacity: 0.85;
 }
 
+/* Reserva el espacio de la fila de fotos mientras se eligen al azar. */
+.photosPending {
+  min-height: clamp(12rem, 22vw, 18rem);
+}
+
 .aboutSection {
   background: var(--accent);
   color: #0a0a0a;
