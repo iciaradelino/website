@@ -315,7 +315,7 @@ export function GalleryWall() {
   return (
     <section id="home" className={styles.hero}>
       <header className={styles.intro}>
-        <h1 className={styles.title}>Historias de Gonzalo</h1>
+        <h1 className={styles.title}>Yukan</h1>
         <p className={styles.subtitle}>Historias, fotografías y cortos</p>
       </header>
 
