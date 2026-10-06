@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { CortoFeature } from "@/components/Corto";
+import { Desk } from "@/components/Desk";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PhotoGrid } from "@/components/PhotoGrid";
@@ -59,32 +60,7 @@ export default function HomePage() {
     <>
       <Header />
       <main>
-        <section id="home" className={styles.hero}>
-          <div className={styles.media} aria-hidden>
-            <video
-              className={styles.image}
-              src="/video.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-            <div className={styles.veil} />
-          </div>
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>
-              <span className={styles.heroLine}>HISTORIAS DE</span>
-              <span className={styles.heroLine}>GONZALO</span>
-            </h1>
-            <p className={styles.heroSubtitle}>
-              <span className={styles.quote}>
-                “Words are never &apos;only words&apos;; they matter because they
-                define the contours of what we can do.”
-              </span>
-              <span className={styles.quoteAuthor}>― Slavoj Žižek (el puto amo)</span>
-            </p>
-          </div>
-        </section>
+        <Desk />
 
         <section id="stories" className={ui.section}>
           <div className={ui.inner}>
