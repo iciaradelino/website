@@ -2,9 +2,10 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: 50;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
   height: 64px;
   padding: 0 var(--page-pad-x);
   border-bottom: 1px solid transparent;
@@ -28,6 +29,7 @@
 }
 
 .logo {
+  justify-self: start;
   font-family: var(--font-serif);
   font-size: clamp(0.95rem, 1.4vw, 1.15rem);
   letter-spacing: 0.18em;
@@ -40,10 +42,53 @@
   color: var(--accent);
 }
 
-.nav {
+.nav,
+.secondary {
   display: flex;
   align-items: center;
   gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.secondary {
+  justify-self: end;
+}
+
+@media (max-width: 640px) {
+  .header {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo secondary"
+      "nav nav";
+    row-gap: 0.35rem;
+    align-content: center;
+  }
+
+  .logo {
+    grid-area: logo;
+  }
+
+  .secondary {
+    grid-area: secondary;
+  }
+
+  .nav {
+    grid-area: nav;
+    justify-content: center;
+  }
+
+  .nav,
+  .secondary {
+    gap: 1.1rem;
+  }
+
+  .link {
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .link::after {
+    bottom: -0.2rem;
+  }
 }
 
 .link {

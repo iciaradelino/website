@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer id="contact" className={styles.footer}>
       <div className={styles.col}>
-        <p className={styles.brand}>GG</p>
+        <p className={styles.brand}>Yukan</p>
       </div>
       <div className={`${styles.col} ${styles.contact}`}>
         <p className={styles.label}>Contacto</p>

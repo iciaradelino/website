@@ -11,6 +11,11 @@ const links = [
   { href: "/cortos", label: "cortos" },
 ];
 
+const sectionLinks = [
+  { href: "/#about", label: "sobre mí" },
+  { href: "/#contact", label: "contacto" },
+];
+
 export function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -30,7 +35,7 @@ export function Header() {
       className={`${styles.header} ${scrolled ? styles.scrolled : styles.top}`}
     >
       <Link href={isHome ? "#home" : "/"} className={styles.logo}>
-        GG
+        Yukan
       </Link>
       <nav className={styles.nav} aria-label="principal">
         {links.map((link) => {
@@ -46,6 +51,13 @@ export function Header() {
             </Link>
           );
         })}
+      </nav>
+      <nav className={styles.secondary} aria-label="secciones">
+        {sectionLinks.map((link) => (
+          <Link key={link.href} href={link.href} className={styles.link}>
+            {link.label}
+          </Link>
+        ))}
       </nav>
     </header>
   );
