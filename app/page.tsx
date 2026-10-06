@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CortoFeature } from "@/components/Corto";
 import { Footer } from "@/components/Footer";
@@ -9,7 +10,7 @@ import { Header } from "@/components/Header";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { Reveal } from "@/components/Reveal";
 import { SectionRule } from "@/components/SectionRule";
-import { StoriesGrid } from "@/components/StoryCard";
+import { StoryCarousel } from "@/components/StoryCarousel";
 import { featuredCorto } from "@/lib/cortos";
 import { photos, pickRandomPhotos, type Photo } from "@/lib/photos";
 import { stories } from "@/lib/stories";
@@ -20,10 +21,12 @@ function SectionHeading({
   title,
   href,
   linkLabel,
+  pillClassName = "",
 }: {
   title: ReactNode;
   href: string;
   linkLabel: string;
+  pillClassName?: string;
 }) {
   return (
     <div className={ui.headingRow}>
@@ -31,7 +34,7 @@ function SectionHeading({
         {title}
       </Reveal>
       <Reveal delayMs={120}>
-        <Link href={href} className={ui.pill}>
+        <Link href={href} className={`${ui.pill} ${pillClassName}`}>
           <span>{linkLabel}</span>
           <svg className={ui.pillIcon} viewBox="0 0 24 24" aria-hidden>
             <path d="M5 11h10.6l-4.3-4.3 1.4-1.4L19.4 12l-6.7 6.7-1.4-1.4 4.3-4.3H5z" />
@@ -62,14 +65,19 @@ export default function HomePage() {
       <main>
         <GalleryWall />
 
-        <section id="stories" className={ui.section}>
+        <section id="stories" className={`${ui.section} ${styles.storiesSection}`}>
           <div className={ui.inner}>
-            <SectionHeading title="Historias" href="/historias" linkLabel="ver todas" />
-            <StoriesGrid stories={stories.slice(0, 3)} />
+            <SectionHeading
+              title="Historias"
+              href="/historias"
+              linkLabel="ver todas"
+              pillClassName={styles.darkPill}
+            />
           </div>
+          <Reveal delayMs={120}>
+            <StoryCarousel stories={stories} />
+          </Reveal>
         </section>
-
-        <SectionRule />
 
         <section id="photos" className={ui.section}>
           <div className={ui.inner}>
@@ -97,6 +105,15 @@ export default function HomePage() {
           <div className={`${ui.inner} ${styles.aboutGrid}`}>
             <Reveal as="h2" className={ui.sectionTitle}>
               Sobre mí
+            </Reveal>
+            <Reveal delayMs={120} className={styles.portrait}>
+              <Image
+                src="/sobre-mi.jpg"
+                alt="Gonzalo con una cámara entre hierbas altas al atardecer"
+                width={1600}
+                height={1052}
+                sizes="(min-width: 960px) 40vw, 100vw"
+              />
             </Reveal>
             <div className={styles.copy}>
               <Reveal as="p" delayMs={80}>

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   useEffect,
-  useRef,
   useState,
   type CSSProperties,
   type ReactNode,
@@ -14,6 +13,7 @@ import { Lightbox } from "@/components/Lightbox";
 import { cortos, type Corto } from "@/lib/cortos";
 import { photos, type Photo } from "@/lib/photos";
 import { stories, storyExcerpt, storyPath, type Story } from "@/lib/stories";
+import { useDrift } from "@/lib/useDrift";
 import styles from "./GalleryWall.module.css";
 
 type Work =
@@ -100,106 +100,18 @@ export function GalleryWall() {
   const [open, setOpen] = useState<number | null>(null);
   // Proporción real de cada vídeo, leída al cargar sus metadatos.
   const [videoRatios, setVideoRatios] = useState<Record<string, number>>({});
-  const wallRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const setRef = useRef<HTMLUListElement>(null);
-  // Si el último gesto fue arrastrar, el clic que lo cierra no abre la obra.
-  const dragged = useRef(false);
+  // La pared se desplaza sola, se detiene al pasar el ratón y se puede arrastrar.
+  // Las obras están colgadas dos veces seguidas para que el paseo no tenga fin.
+  const { viewportRef: wallRef, trackRef, setRef, onClickCapture } = useDrift({
+    ready: works !== null,
+    speed: SPEED,
+  });
 
   useEffect(() => {
     setWorks(pickWorks());
   }, []);
 
   const wallPhotos = (works ?? []).flatMap((w) => (w.kind === "photo" ? [w.photo] : []));
-
-  // La pared se desplaza sola, se detiene al pasar el ratón y se puede arrastrar.
-  // Las obras están colgadas dos veces seguidas para que el paseo no tenga fin.
-  useEffect(() => {
-    const wall = wallRef.current;
-    const track = trackRef.current;
-    const set = setRef.current;
-    if (!works || !wall || !track || !set) return;
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let width = set.offsetWidth;
-    let offset = 0;
-    let velocity = reduced ? 0 : -SPEED;
-    let hovering = false;
-    let drag: { id: number; x: number; t: number; startX: number; moved: boolean } | null = null;
-    let last = performance.now();
-    let frame = 0;
-
-    const tick = (now: number) => {
-      const dt = Math.min((now - last) / 1000, 0.1);
-      last = now;
-      if (!drag) {
-        const target = reduced || hovering ? 0 : -SPEED;
-        velocity += (target - velocity) * Math.min(1, dt * 2.5);
-        offset += velocity * dt;
-      }
-      if (width > 0) offset = (((offset % width) - width) % width);
-      track.style.transform = `translate3d(${offset.toFixed(2)}px, 0, 0)`;
-      frame = requestAnimationFrame(tick);
-    };
-
-    const onDown = (event: PointerEvent) => {
-      if (event.button !== 0) return;
-      drag = { id: event.pointerId, x: event.clientX, t: event.timeStamp, startX: event.clientX, moved: false };
-      dragged.current = false;
-    };
-
-    const onMove = (event: PointerEvent) => {
-      if (!drag || event.pointerId !== drag.id) return;
-      if (!drag.moved && Math.abs(event.clientX - drag.startX) > 6) {
-        drag.moved = true;
-        dragged.current = true;
-        wall.setPointerCapture(event.pointerId);
-      }
-      if (!drag.moved) return;
-      const dx = event.clientX - drag.x;
-      const dt = Math.max((event.timeStamp - drag.t) / 1000, 0.001);
-      offset += dx;
-      velocity = velocity * 0.6 + (dx / dt) * 0.4;
-      drag.x = event.clientX;
-      drag.t = event.timeStamp;
-    };
-
-    const onUp = (event: PointerEvent) => {
-      if (!drag || event.pointerId !== drag.id) return;
-      drag = null;
-    };
-
-    const onEnter = (event: PointerEvent) => {
-      if (event.pointerType === "mouse") hovering = true;
-    };
-    const onLeave = () => {
-      hovering = false;
-    };
-
-    const resize = new ResizeObserver(() => {
-      width = set.offsetWidth;
-    });
-    resize.observe(set);
-
-    wall.addEventListener("pointerdown", onDown);
-    wall.addEventListener("pointermove", onMove);
-    wall.addEventListener("pointerup", onUp);
-    wall.addEventListener("pointercancel", onUp);
-    wall.addEventListener("pointerenter", onEnter);
-    wall.addEventListener("pointerleave", onLeave);
-    frame = requestAnimationFrame(tick);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      resize.disconnect();
-      wall.removeEventListener("pointerdown", onDown);
-      wall.removeEventListener("pointermove", onMove);
-      wall.removeEventListener("pointerup", onUp);
-      wall.removeEventListener("pointercancel", onUp);
-      wall.removeEventListener("pointerenter", onEnter);
-      wall.removeEventListener("pointerleave", onLeave);
-    };
-  }, [works]);
 
   // Los vídeos solo se reproducen mientras están a la vista.
   useEffect(() => {
@@ -322,12 +234,7 @@ export function GalleryWall() {
       <div
         ref={wallRef}
         className={styles.wall}
-        onClickCapture={(event) => {
-          if (!dragged.current) return;
-          event.preventDefault();
-          event.stopPropagation();
-          dragged.current = false;
-        }}
+        onClickCapture={onClickCapture}
       >
         {works ? (
           <div ref={trackRef} className={styles.track}>

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
-import { StoriesGrid } from "@/components/StoryCard";
+import { StoryIndex } from "@/components/StoryIndex";
 import {
   formatStoryDate,
   getOtherStories,
@@ -94,7 +94,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
             <Reveal as="h2" className={styles.sectionTitle}>
               Otras historias
             </Reveal>
-            <StoriesGrid stories={others} />
+            <StoryIndex stories={others} />
           </div>
         </section>
 

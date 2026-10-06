@@ -1,0 +1,141 @@
+.index {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.row {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.link {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: clamp(2.5rem, 6vw, 5rem) 1fr auto;
+  align-items: baseline;
+  gap: clamp(1rem, 2vw, 2rem);
+  padding: clamp(2rem, 4.5vw, 3.25rem) 0;
+  color: inherit;
+}
+
+/* Al pasar por encima, una luz de techo como la de las obras de la portada. */
+.link::before {
+  content: "";
+  position: absolute;
+  inset: 0 -6%;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side at 40% 50%,
+    rgba(255, 240, 215, 0.07),
+    rgba(255, 240, 215, 0.025) 55%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.link:hover::before,
+.link:focus-visible::before {
+  opacity: 1;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.number {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  opacity: 0.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  max-width: 46rem;
+}
+
+.excerpt {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.3vw, 2rem);
+  font-style: italic;
+  line-height: 1.4;
+  white-space: pre-line;
+  text-wrap: pretty;
+  transition: color 0.3s ease;
+}
+
+.excerpt::before {
+  content: "“";
+}
+
+.excerpt::after {
+  content: "”";
+}
+
+.link:hover .excerpt,
+.link:focus-visible .excerpt {
+  color: var(--accent);
+}
+
+/* — Cartela, igual que en la portada — */
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 1.1rem;
+}
+
+.kind {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+}
+
+.read {
+  align-self: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(-0.5rem);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.link:hover .read,
+.link:focus-visible .read {
+  opacity: 0.7;
+  transform: none;
+}
+
+@media (max-width: 720px) {
+  .link {
+    grid-template-columns: 2rem 1fr;
+  }
+
+  .read {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link::before,
+  .excerpt,
+  .read {
+    transition: none;
+  }
+}

@@ -278,3 +278,9 @@ export function storyExcerpt(story: Story, maxLength = 200) {
   if (excerpt.length <= maxLength) return excerpt;
   return `${excerpt.slice(0, excerpt.lastIndexOf(" ", maxLength))}…`;
 }
+
+/** Minutos de lectura aproximados, a unas 200 palabras por minuto. */
+export function readingMinutes(story: Story) {
+  const words = story.content.join(" ").split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
