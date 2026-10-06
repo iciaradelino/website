@@ -11,6 +11,8 @@ export type Story = {
   epigraph?: string;
   date?: string;
   content: string[];
+  /** Frase que se muestra en la portada; si falta, se usa el comienzo del texto. */
+  excerpt?: string;
   note?: string;
 };
 
@@ -261,4 +263,18 @@ export function isSectionBreak(paragraph: string) {
 
 export function storyPath(slug: string) {
   return `/historias/${slug}`;
+}
+
+/**
+ * Frase corta de la historia para mostrarla como lámina: la primera frase del
+ * texto (o los dos primeros versos, si es un poema).
+ */
+export function storyExcerpt(story: Story, maxLength = 200) {
+  if (story.excerpt) return story.excerpt;
+  const first = story.content.find((p) => !isSectionBreak(p)) ?? "";
+  const excerpt = first.includes("\n")
+    ? first.split("\n").slice(0, 2).join("\n").replace(/[,;:]$/, "")
+    : (first.match(/^.+?[.!?…](?=\s|$)/)?.[0] ?? first);
+  if (excerpt.length <= maxLength) return excerpt;
+  return `${excerpt.slice(0, excerpt.lastIndexOf(" ", maxLength))}…`;
 }

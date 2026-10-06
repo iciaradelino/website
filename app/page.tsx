@@ -3,13 +3,13 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { CortoFeature } from "@/components/Corto";
-import { Desk } from "@/components/Desk";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { Reveal } from "@/components/Reveal";
 import { SectionRule } from "@/components/SectionRule";
 import { StoriesGrid } from "@/components/StoryCard";
+import { Triptych } from "@/components/Triptych";
 import { featuredCorto } from "@/lib/cortos";
 import { photos, pickRandomPhotos, type Photo } from "@/lib/photos";
 import { stories } from "@/lib/stories";
@@ -60,7 +60,7 @@ export default function HomePage() {
     <>
       <Header />
       <main>
-        <Desk />
+        <Triptych />
 
         <section id="stories" className={ui.section}>
           <div className={ui.inner}>
