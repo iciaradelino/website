@@ -1,0 +1,21 @@
+/*
+ * Cada sección tiene su propio fondo, todos muy cerca del de la portada
+ * (#131211 → #0b0a09): se nota el cambio, pero apenas.
+ */
+.storiesSection {
+  background:
+    radial-gradient(ellipse 60% 70% at 15% 0%, rgba(255, 240, 215, 0.035), transparent 70%),
+    linear-gradient(180deg, #151413, #100f0e);
+}
+
+.photosSection {
+  background:
+    radial-gradient(ellipse 55% 70% at 85% 10%, rgba(255, 240, 215, 0.03), transparent 70%),
+    linear-gradient(180deg, #0d0c0b, #111010);
+}
+
+.cortosSection {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(255, 240, 215, 0.03), transparent 70%),
+    linear-gradient(180deg, #131211, #0b0a09);
+}
