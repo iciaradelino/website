@@ -32,8 +32,8 @@
   justify-self: start;
   font-family: var(--font-serif);
   font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-  letter-spacing: 0.18em;
-  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-weight: 400;
   text-transform: uppercase;
   transition: color 0.25s ease;
 }

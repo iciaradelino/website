@@ -7,7 +7,7 @@
   justify-content: center;
   gap: clamp(2.5rem, 7vh, 4.5rem);
   min-height: 100dvh;
-  padding: calc(64px + 4vh) 0 6vh;
+  padding: calc(64px + 2vh) 0 13vh;
   overflow: hidden;
   scroll-margin-top: 64px;
   background:

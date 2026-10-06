@@ -37,8 +37,8 @@
 .pageTitle {
   margin: 0;
   font-size: clamp(1.85rem, 4vw, 3rem);
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  letter-spacing: 0.12em;
   line-height: 1.2;
 }
 
