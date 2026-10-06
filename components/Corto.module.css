@@ -31,7 +31,7 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-light);
 }
 
 .meta {
@@ -65,7 +65,7 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   line-height: 1.2;
-  color: var(--accent);
+  color: var(--accent-light);
 }
 
 /* Lista */

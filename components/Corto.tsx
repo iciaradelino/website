@@ -41,7 +41,7 @@ export function CortoFeature({ corto }: { corto: Corto }) {
         <p className={styles.label}>Corto destacado</p>
         <h3 className={styles.featureTitle}>{corto.title}</h3>
         <CortoMeta corto={corto} />
-        <p className={styles.synopsis}>{corto.synopsis}</p>
+        {corto.synopsis ? <p className={styles.synopsis}>{corto.synopsis}</p> : null}
       </Reveal>
     </div>
   );
@@ -56,7 +56,7 @@ export function CortosList({ cortos }: { cortos: Corto[] }) {
           <div className={styles.itemText}>
             <h3 className={styles.itemTitle}>{corto.title}</h3>
             <CortoMeta corto={corto} />
-            <p className={styles.synopsis}>{corto.synopsis}</p>
+            {corto.synopsis ? <p className={styles.synopsis}>{corto.synopsis}</p> : null}
           </div>
         </Reveal>
       ))}

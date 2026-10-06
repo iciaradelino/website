@@ -4,7 +4,7 @@ export type Corto = {
   title: string;
   year: number;
   duration: string;
-  synopsis: string;
+  synopsis?: string;
   /** Ruta del vídeo en /public. Si falta, se muestra un marcador. */
   src?: string;
   featured?: boolean;
@@ -13,33 +13,20 @@ export type Corto = {
 export const cortos: Corto[] = [
   {
     id: "1",
-    slug: "raices",
-    title: "Raíces",
-    year: 2025,
-    duration: "4 min",
-    synopsis:
-      "Un paseo lento por el bosque donde crecí. Sin palabras: solo el ruido de las hojas y lo que queda bajo la tierra cuando nadie mira.",
-    src: "/video.mp4",
+    slug: "corto-1",
+    title: "Sin título I",
+    year: 2026,
+    duration: "6 min",
+    src: "/cortos/corto-1.mp4",
     featured: true,
   },
   {
     id: "2",
-    slug: "quietud",
-    title: "Quietud",
-    year: 2025,
-    duration: "3 min",
-    synopsis:
-      "Un único plano, una tarde que no termina. Un ejercicio sobre esperar sin saber qué se espera.",
-    src: "/video-still.mp4",
-  },
-  {
-    id: "3",
-    slug: "tren-de-medianoche",
-    title: "Tren de medianoche",
-    year: 2024,
-    duration: "6 min",
-    synopsis:
-      "Adaptación de la historia del mismo nombre. Un vagón, dos desconocidos y una estación que no aparece en ningún horario.",
+    slug: "corto-2",
+    title: "Sin título II",
+    year: 2026,
+    duration: "8 min",
+    src: "/cortos/corto-2.mp4",
   },
 ];
 

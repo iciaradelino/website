@@ -70,7 +70,7 @@
 
 .control:hover,
 .control:focus-visible {
-  color: var(--accent);
+  color: var(--accent-light);
   background: rgba(255, 255, 255, 0.08);
 }
 

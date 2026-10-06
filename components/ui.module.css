@@ -20,11 +20,14 @@
   margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem);
 }
 
+/* Misma letra que el título de la portada, pero en minúsculas. */
 .sectionTitle {
   margin: 0;
   font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-transform: lowercase;
 }
 
 .pageTitle {
@@ -55,7 +58,7 @@
   padding: 0 1.1rem;
   border-radius: 50px;
   background: var(--accent);
-  color: #000;
+  color: #f4f1ea;
   font-size: clamp(0.9rem, 1.4vw, 1.15rem);
   letter-spacing: 0.04em;
   white-space: nowrap;
@@ -66,9 +69,9 @@
 }
 
 .pill:hover {
-  filter: brightness(1.06);
+  filter: brightness(1.15);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(225, 226, 137, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .pill:active {
@@ -80,16 +83,6 @@
   height: 1.05rem;
   fill: currentColor;
   flex-shrink: 0;
-}
-
-.sectionRuleWrap {
-  padding: 0 var(--page-pad-x);
-}
-
-.sectionRule {
-  margin: 0;
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {

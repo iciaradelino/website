@@ -24,7 +24,7 @@ export const stories: Story[] = [
     summary: "Un hombre que ya no recuerda su infancia recibe la visita de una sombra que pinta de azul sus memorias.",
     description:
       "Un cigarro robado, un árbol sin hojas y una flor blanca en un prado de verano. Años después, en la ciudad, una sombra empieza a visitarlo con cuadros de su vida y un pincel empapado en el color del cielo.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     content: [
       "Últimamente he intentado recordar.",
       "Dejo que olas de nostalgia golpeen mi árida memoria, esperando que empapen mi mente de recuerdos con los que tan solo puedo soñar en hundirme. Interminables noches en vela en las que me mantengo a la distancia, observando pensamientos que fueron míos, rogando ser absorbido por ellos, pero ya no son lo que eran, no son lo que sentí, son espejismos de una vida que ya no me pertenece. En tiempos muertos cierro los ojos y me dejo naufragar en el mar de memorias en el que tanto ansío ahogarme. El tiempo es tranquilo, la brisa agradable y, en consecuencia, sufro al saber que mi sueño nunca se hará realidad. Soy un náufrago surcando un océano en armonía, rezando para que en algún fugaz momento el agua salpique mi deshumedecida cara de marinero y por fin volver a sentirme capitán en tiempos de tormenta.",
@@ -78,7 +78,7 @@ export const stories: Story[] = [
     summary: "Un poema sobre una niña que el mar no quiere devolver.",
     description:
       "Pelo y ropa mecidos por la marea, una niña que decidió jugar y una guerra silenciosa entre la orilla y el océano por guardar su recuerdo.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     content: [
       "Pelo que fue liso está siendo mecido por la marea.\nSe extiende como grietas por el frío ámbito en el que flota.\nAgua gris reflejando el color del cielo:\nun oscuro grisáceo, un humo de hoguera.",
       "Largas horas destiñeron su ropa\nSu joven piel, agrietada por la sal.\nEn la lejanía rugen las olas; lloran.\nA sus actos: consecuencias que nadie pudo imaginar.",
@@ -108,7 +108,7 @@ export const stories: Story[] = [
     summary: "Un poema sobre un espejismo en el desierto.",
     description:
       "Entre la arena ardiente y la refracción del calor, una figura en la lejanía que parece acercarse y desaparecer, y una pregunta en la noche fría.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     content: [
       "Entre la sofocante calidez y el deslumbrante brillo del atardecer\nMientras la anaranjada arena me cortaba al ser mecida por el viento\nY mis pies se sepultaban en el suelo\nCreí verte a lo lejos, observando.",
       "Apenas con fuerza me arrastré por la arena\nDesterrando la gravilla de mis quemados pies\nY entre la refracción del calor\nY las sombras de las dunas\nCon mis ojos llorosos, me pareció verte ver",
@@ -125,7 +125,7 @@ export const stories: Story[] = [
     summary: "La Muerte, cansada de su oficio, ve nacer una flor de sus propias lágrimas.",
     description:
       "La Parca camina descalza por el prado en el que nació. De sus lágrimas brota una pequeña flor naranja que promete no tocar nunca, hasta que el Invierno le susurra que vendrá a por ella.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     content: [
       "La Muerte caminaba descalza por el azul prado en el que nació. Sin prisa, avanzaba por el denso pastizal de su infancia, el cual, con inmensa belleza, era sumergido bajo un fresco resplandor. Era la luna, compañera de la niñez, la que iluminaba la noche, dándole la bienvenida a la amiga que siempre adoró. La Muerte vagaba lentamente por el recuerdo de su hogar; tristes lágrimas inundaban sus ojos, finalmente comprendía que nadie podía ser guiado por su mano al único lugar en el que pudo sentir paz. El viento trató de consolarla soplando una gentil brisa, meciendo tiernamente el prado, intentando apartar con ternura su salado dolor. Ella no merecía ahogarse en pena. En el campo, todos conocían a La Parca y su buen corazón.",
       "Aquella noche, con apenados ojos, observó el sutil brillar de las estrellas y confesó a la noche que, por error, prohibió a quien no debía admirar el cielo que siempre amó. Esa tarde, antes de llorar, la Parca visitó una pequeña casa en el monte. Ella nunca quiso utilizar su guadaña al trabajar; sabía que era un método cruel con el que despedirse de la vida. Prefería desarropar con sutileza al desgraciado y llevarlo en brazos a su nuevo hogar, un lugar en el que, aunque perfecto, nadie quería ir por miedo a olvidar. Esa noche, al abrazar a un dulce anciano que hablaba en sueños, dejó su estéril arma en el suelo, sin saber de un pequeño nieto cuyo interés se apoderó de él. Cuando volvió a la casa para coger su herramienta, había un tierno y frío cuerpo agarrando sin fuerza el instrumento, esperando ser llevado de vuelta con su abuelo, para que este le contara historias de la vida que nunca pudo tener.",
@@ -148,7 +148,7 @@ export const stories: Story[] = [
     summary: "Un túnel por el que todos caminamos, alejándonos de la luz de la que venimos.",
     description:
       "Sobre el camino largo que todos elegimos al crecer, los que se dan la vuelta y la certeza de que, en algún momento, volveremos a encontrar la luz.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     epigraph: "Leer con la canción “Le tunnel” de Sylvain Chauveau",
     content: [
       "Hay un túnel en el que todos nos metemos. Nos dicen que no hay salida y, aun así, nunca nos ha llegado a importar. Todos caminamos por él, olvidando la luz de la que procedemos para explorar la innombrada oscuridad. Algunos se cansan, deciden darse la vuelta y, al hacerlo, no los volvemos a ver más. En la distancia vemos sus siluetas, acercándose a la luz que fue abandonada por nosotros, pero los años pasan y, aun así, al darnos brevemente la vuelta, les seguimos viendo caminar. Es un camino largo el que hemos decidido, sea cual sea la dirección en la que queramos avanzar. Pero una gran aventura nos espera, por eso caminamos, por nuestras jóvenes ganas de nombrar. Nuestro futuro nos espera, nuestros ojos brillan, nos guían al andar. Hay ganas y fuerza, tenemos la suerte de tener amigos con los que marchar. Y aunque la luz se nos aleje, sabemos que venimos de ella, y en algún momento la volveremos a encontrar. Siempre podremos dar la vuelta, pero de momento nuestra casa está lejos, y por eso hemos aceptado el camino como nuestro hogar.",
@@ -173,7 +173,7 @@ export const stories: Story[] = [
     summary: "Un público entero espera en un teatro en ruinas a que vuelva un anciano que desapareció tras el telón.",
     description:
       "Una noche de noviembre, un anciano sube al escenario, confiesa su vida y desaparece tras el telón. El público se queda esperando durante años, mientras fuera el mundo sigue ocurriendo.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     content: [
       "Se derrumbaba apenas con el tacto del viento, y aun así, tus ojos no lo cesaban de observar. Miles de historias narradas entre las peladas paredes del teatro, expresando con delicadeza la metaforizada condición de la humanidad. Sus venganzas, sus odios; sus ganas de amar. Los suelos infectados en mugroso verde, los asientos corrompidos por la ausencia de la gente. Cristales que fueron ventanas. Alfombras ancianas bañadas en espeso polvo. Focos apuntando a las sombras, tratando de encontrar en ellas los artistas que estaban acostumbrados a iluminar. El altar de los actores olvidado por el telón de la oscuridad.",
       "Eras demasiado joven como para recordar, pero un día de noviembre el público desvaneció. Perdidos entre los aplausos de la multitud, los actores creyeron ser los personajes de su historia. Contemplaron a la audiencia, y desde la altura de su gloria, prometieron a la audiencia que aquella noche, lo que presenciaron, no fue una producción. Ofrecieron a la muchedumbre la oportunidad de explorar un mundo lejano; y un hombre anciano, desgastado por el tiempo, alzó la mano para ser el tributo de la nueva actuación. Se guió con lentos pasos al eje del teatro y una vez los ardientes focos escocieron sus pupilas el público aplaudió. El hombre expuesto a todos, fue preguntado por su vida, y mientras agarraba tímidamente su desgastada chaqueta, tratando de buscar refugio en ella, contestó. Dijo que desde su infancia no disfrutaba, que mientras esperaba a su muerte, venía a distraerse al teatro a ver las vidas que aunque quiso, nunca vivió.",
@@ -208,7 +208,7 @@ export const stories: Story[] = [
     summary: "En un prado inundado por las tormentas, un hombre le pide a una máquina que nunca cambie.",
     description:
       "Todo a su alrededor se transforma, se hunde en el barro o desaparece con el tiempo. Solo el ruido constante de una máquina de metal le ofrece la única certeza que le queda.",
-    accent: "var(--accent)",
+    accent: "var(--accent-light)",
     content: [
       "Su alma levitaba por el alivio de su voz: su perfecta uniformidad, su predecible función. El barro consumía con ansia sus desgastados zapatos. La hierba, verde como nunca por la lluvia de las impredecibles tormentas, esparcida sin armonía sobre aquella húmeda tierra. Lombrices avanzaban entre el deslizante terreno, erosionado por la constante necesidad del mundo por transformarse con el tiempo. El cielo, parcheado por una inconstante mancha gris, transicionaba continuamente de color, mostrando ante sus ojos un interminable e iluminado humedal, tan solo para cubrirlo de nuevo. Árboles en la distancia chorreaban manantiales desde sus caducas hojas. La transitoria luz del cielo iluminaba con lentas ráfagas el prado, dando la tranquila sensación del ralentizar del tiempo. El viento ondeaba el casi ahogado pasto, silbando una inconsistente melodía.",
       "Entre los aullidos de la brisa, él escuchaba su plateada voz: su constante maquinar, engranajes fríos frotándose ininterrumpidamente entre ellos, creando una única sonoridad que la inconsistente naturaleza no podría recrear. Una cadenciosa melodía de percusión industrial, destrozando los impredecibles cantos y silencios de la naturaleza. Sin acercarse, él podía sentir el inhumano tacto del aparato. El álgido y ferroso tacto, pulido hasta ser la lisa y continua maquinaria que es. Un obelisco de metal diseñado para durar, idéntico al día de su creación. Ningún rasguño ni fallo, una inmutable genialidad perdida en un campo sumergido por tormentas.",

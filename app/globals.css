@@ -2,9 +2,12 @@
   --bg: #0a0a0a;
   --bg-mid: #2b2b2b;
   --text: #ffffff;
-  --accent: #e1e289;
-  --accent-mid: #99aa38;
-  --accent-deep: #60aa38;
+  /* Verde de la web (un verde pino apagado): para fondos y botones. */
+  --accent: #34523f;
+  --accent-dark: #22372a;
+  /* El mismo verde, más claro, para texto y detalles sobre fondo oscuro. */
+  --accent-light: #a9c7b1;
+  --accent-mid: #7fa48a;
   --placeholder: #d9d9d9;
   --nav-tint: rgba(255, 255, 255, 0.3);
   --footer-bg: #000;
