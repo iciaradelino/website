@@ -1,8 +1,27 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/Reveal";
 import type { Corto } from "@/lib/cortos";
 import styles from "./Corto.module.css";
 
-function CortoVideo({ corto }: { corto: Corto }) {
+function CortoVideo({ corto, autoPlay = false }: { corto: Corto; autoPlay?: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Se reproduce sin sonido mientras está a la vista (los navegadores solo dejan
+  // empezar solos a los vídeos silenciados); los controles permiten activar el sonido.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!autoPlay || !video) return;
+    video.muted = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [autoPlay]);
+
   if (!corto.src) {
     return (
       <div className={styles.placeholder} role="img" aria-label="Corto próximamente">
@@ -13,9 +32,12 @@ function CortoVideo({ corto }: { corto: Corto }) {
 
   return (
     <video
+      ref={videoRef}
       className={styles.video}
       src={corto.src}
       controls
+      muted={autoPlay}
+      loop={autoPlay}
       preload="metadata"
       playsInline
       aria-label={corto.title}
@@ -35,7 +57,7 @@ export function CortoFeature({ corto }: { corto: Corto }) {
   return (
     <div className={styles.feature}>
       <Reveal className={styles.featureMedia}>
-        <CortoVideo corto={corto} />
+        <CortoVideo corto={corto} autoPlay />
       </Reveal>
       <Reveal className={styles.featureText} delayMs={120}>
         <p className={styles.label}>Corto destacado</p>

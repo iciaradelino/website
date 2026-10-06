@@ -20,14 +20,13 @@
   margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem);
 }
 
-/* Misma letra que el título de la portada, pero en minúsculas. */
+/* Misma letra que el título de la portada. */
 .sectionTitle {
   margin: 0;
   font-size: clamp(1.6rem, 3.5vw, 2.5rem);
   font-weight: 400;
   letter-spacing: 0.12em;
   line-height: 1.1;
-  text-transform: lowercase;
 }
 
 .pageTitle {
