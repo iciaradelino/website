@@ -1,3 +1,8 @@
+/* La portada termina en este mismo tono, así que las secciones siguen sin cortes. */
+.landing {
+  background: #0b0a09;
+}
+
 .pageMain {
   padding-top: 64px;
 }

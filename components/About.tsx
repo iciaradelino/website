@@ -12,8 +12,9 @@ export function About() {
             className={styles.photo}
             src="/sobre-mi.jpg"
             alt="Gonzalo con una cámara entre hierbas altas al atardecer"
-            fill
-            sizes="(min-width: 960px) 30vw, 100vw"
+            width={1858}
+            height={1224}
+            sizes="(min-width: 960px) 40vw, 100vw"
           />
         </Reveal>
 

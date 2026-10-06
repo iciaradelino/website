@@ -14,7 +14,6 @@ import { featuredCorto } from "@/lib/cortos";
 import { photos } from "@/lib/photos";
 import { stories } from "@/lib/stories";
 import ui from "@/components/ui.module.css";
-import styles from "./page.module.css";
 
 function SectionHeading({
   title,
@@ -52,10 +51,10 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main>
+      <main className={ui.landing}>
         <GalleryWall />
 
-        <section id="stories" className={`${ui.section} ${styles.storiesSection}`}>
+        <section id="stories" className={ui.section}>
           <div className={ui.inner}>
             <SectionHeading title="Historias" href="/historias" linkLabel="ver todas" />
           </div>
@@ -64,7 +63,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section id="photos" className={`${ui.section} ${styles.photosSection}`}>
+        <section id="photos" className={ui.section}>
           <div className={ui.inner}>
             <SectionHeading title="Fotos" href="/fotos" linkLabel="ver todas" />
           </div>
@@ -73,7 +72,7 @@ export default function HomePage() {
           </Reveal>
         </section>
 
-        <section id="cortos" className={`${ui.section} ${styles.cortosSection}`}>
+        <section id="cortos" className={ui.section}>
           <div className={ui.inner}>
             <SectionHeading title="Cortos" href="/cortos" linkLabel="ver todos" />
             <CortoFeature corto={featuredCorto} />
