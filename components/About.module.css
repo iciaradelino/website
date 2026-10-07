@@ -1,10 +1,10 @@
 .about {
-  padding: clamp(4rem, 9vw, 7rem) 0;
+  padding: clamp(2rem, 4vw, 3rem) 0;
   color: #f4f1ea;
-  /* Casi como la portada, con un leve tinte del verde de la web. */
+  /* El verde pino de la web, con la misma luz cálida de techo que las otras salas. */
   background:
-    radial-gradient(ellipse 60% 70% at 20% 30%, rgba(169, 199, 177, 0.04), transparent 70%),
-    linear-gradient(180deg, #121312, #0c0d0c);
+    radial-gradient(ellipse 60% 70% at 25% 20%, rgba(255, 240, 215, 0.06), transparent 70%),
+    linear-gradient(180deg, var(--accent), #263d2f);
 }
 
 .grid {
@@ -67,8 +67,9 @@
   text-wrap: pretty;
 }
 
+/* Sobre el fondo verde, el verde claro de la web se pierde: un tono más pálido. */
 .lead em {
-  color: var(--accent-light);
+  color: #d6e8da;
 }
 
 .body {
