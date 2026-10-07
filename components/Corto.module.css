@@ -25,14 +25,6 @@
   color: rgba(0, 0, 0, 0.55);
 }
 
-.label {
-  margin: 0 0 0.65rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent-light);
-}
 
 .meta {
   margin: 0.6rem 0 0;
@@ -48,24 +40,6 @@
   letter-spacing: 0.01em;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
-}
-
-/* Destacado */
-
-.feature {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-  align-items: center;
-}
-
-.featureTitle {
-  margin: 0;
-  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  line-height: 1.2;
-  color: var(--accent-light);
 }
 
 /* Lista */
@@ -101,8 +75,106 @@
   }
 }
 
-@media (min-width: 960px) {
-  .feature {
-    grid-template-columns: 1.6fr 1fr;
+
+/* — Sala de proyección — */
+
+/* Sala más corta que las demás: solo la pantalla y su cartela. */
+section.screening {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+section.screening > :first-child {
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+/* Al entrar en la sala, las luces bajan; los bordes se funden con las salas vecinas. */
+.screening::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0, 0, 0, 0.6) 18%,
+    rgba(0, 0, 0, 0.6) 82%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 1.6s ease;
+  pointer-events: none;
+}
+
+.lightsOff::after {
+  opacity: 1;
+}
+
+.screen {
+  position: relative;
+  width: min(100% - 2 * var(--page-pad-x), 40rem);
+  margin: 0 auto;
+}
+
+/* El haz del proyector cae sobre la pantalla y se nota más con la sala a oscuras. */
+.screen::before {
+  content: "";
+  position: absolute;
+  inset: -5rem -18% 35%;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side at 50% 40%,
+    rgba(255, 240, 215, 0.12),
+    rgba(255, 240, 215, 0.04) 55%,
+    transparent
+  );
+  opacity: 0.4;
+  transition: opacity 1.6s ease;
+  pointer-events: none;
+}
+
+.lightsOff .screen::before {
+  opacity: 1;
+}
+
+.screen .video,
+.screen .placeholder {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 28px 64px rgba(0, 0, 0, 0.6);
+}
+
+.caption {
+  width: min(100% - 2 * var(--page-pad-x), 40rem);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.caption {
+  margin-top: 1.5rem;
+}
+
+.kind {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.screenTitle {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  font-style: italic;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  color: var(--accent-light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screening::after,
+  .screen::before {
+    transition: none;
   }
 }

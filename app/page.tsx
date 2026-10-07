@@ -3,41 +3,57 @@
 import { useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import { About } from "@/components/About";
-import { CortoFeature } from "@/components/Corto";
+import { ScreeningRoom } from "@/components/Corto";
 import { Footer } from "@/components/Footer";
 import { GalleryWall } from "@/components/GalleryWall";
 import { Header } from "@/components/Header";
-import { PhotoCarousel } from "@/components/PhotoCarousel";
+import { PhotoWall } from "@/components/PhotoWall";
 import { Reveal } from "@/components/Reveal";
-import { StoryCarousel } from "@/components/StoryCarousel";
+import { StoryRoom } from "@/components/StoryRoom";
 import { featuredCorto } from "@/lib/cortos";
 import { photos } from "@/lib/photos";
 import { stories } from "@/lib/stories";
 import ui from "@/components/ui.module.css";
 import styles from "./page.module.css";
 
-function SectionHeading({
+/** Cuántas historias se muestran en la sala de la portada. */
+const STORY_COUNT = 5;
+
+function RoomHeading({
+  room,
   title,
-  href,
-  linkLabel,
+  link,
+  centered = false,
+  tight = false,
 }: {
+  room: string;
   title: ReactNode;
-  href: string;
-  linkLabel: string;
+  link?: { href: string; label: string };
+  centered?: boolean;
+  tight?: boolean;
 }) {
   return (
-    <div className={ui.headingRow}>
-      <Reveal as="h2" className={ui.sectionTitle}>
-        {title}
-      </Reveal>
-      <Reveal delayMs={120}>
-        <Link href={href} className={ui.pill}>
-          <span>{linkLabel}</span>
-          <svg className={ui.pillIcon} viewBox="0 0 24 24" aria-hidden>
-            <path d="M5 11h10.6l-4.3-4.3 1.4-1.4L19.4 12l-6.7 6.7-1.4-1.4 4.3-4.3H5z" />
-          </svg>
-        </Link>
-      </Reveal>
+    <div
+      className={`${ui.inner} ${ui.roomHeading} ${centered ? ui.centered : ""} ${tight ? ui.tight : ""}`}
+    >
+      <div className={ui.roomTitles}>
+        <Reveal as="p" className={ui.kicker}>
+          {room}
+        </Reveal>
+        <Reveal as="h2" className={ui.sectionTitle} delayMs={60}>
+          {title}
+        </Reveal>
+      </div>
+      {link ? (
+        <Reveal className={ui.roomLinkWrap} delayMs={120}>
+          <Link href={link.href} className={ui.roomLink}>
+            {link.label}
+            <span className={ui.roomLinkArrow} aria-hidden>
+              →
+            </span>
+          </Link>
+        </Reveal>
+      ) : null}
     </div>
   );
 }
@@ -56,29 +72,40 @@ export default function HomePage() {
         <GalleryWall />
 
         <section id="stories" className={`${ui.section} ${styles.storiesSection}`}>
-          <div className={ui.inner}>
-            <SectionHeading title="Historias" href="/historias" linkLabel="ver todas" />
-          </div>
-          <Reveal delayMs={120}>
-            <StoryCarousel stories={stories} />
+          <RoomHeading
+            room="Sala I"
+            title="Historias destacadas"
+            link={{ href: "/historias", label: "ver todas" }}
+            tight
+          />
+          <Reveal className={ui.inner} delayMs={120}>
+            <StoryRoom stories={stories.slice(0, STORY_COUNT)} />
           </Reveal>
         </section>
 
         <section id="photos" className={`${ui.section} ${styles.photosSection}`}>
+          <RoomHeading
+            room="Sala II"
+            title="Fotos recientes"
+            link={{ href: "/fotos", label: "ver todas" }}
+          />
           <div className={ui.inner}>
-            <SectionHeading title="Fotos" href="/fotos" linkLabel="ver todas" />
+            <PhotoWall photos={photos} />
           </div>
-          <Reveal delayMs={120}>
-            <PhotoCarousel photos={photos} />
-          </Reveal>
         </section>
 
-        <section id="cortos" className={`${ui.section} ${styles.cortosSection}`}>
-          <div className={ui.inner}>
-            <SectionHeading title="Cortos" href="/cortos" linkLabel="ver todos" />
-            <CortoFeature corto={featuredCorto} />
-          </div>
-        </section>
+        <ScreeningRoom
+          corto={featuredCorto}
+          className={`${ui.section} ${styles.cortosSection}`}
+          heading={
+            <RoomHeading
+              room="Sala III"
+              title="Cortos"
+              link={{ href: "/cortos", label: "ver todos" }}
+              centered
+            />
+          }
+        />
 
         <About />
 

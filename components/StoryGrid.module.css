@@ -1,0 +1,150 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  display: flex;
+}
+
+/* Cada lámina toma su color de --tone, definido en línea desde el componente. */
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: clamp(16rem, 28vw, 21rem);
+  padding: clamp(1.75rem, 3.2vw, 2.75rem);
+  color: inherit;
+  background:
+    radial-gradient(
+      120% 90% at 100% 0%,
+      color-mix(in srgb, var(--tone) 30%, transparent),
+      transparent 60%
+    ),
+    color-mix(in srgb, var(--tone) 11%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--tone) 32%, transparent);
+  transition:
+    transform 0.45s ease,
+    border-color 0.45s ease,
+    background-color 0.45s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--tone) 55%, transparent);
+  background-color: color-mix(in srgb, var(--tone) 16%, var(--bg));
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--tone);
+  outline-offset: 4px;
+}
+
+/* Número grande y tenue detrás del texto. */
+.number {
+  position: absolute;
+  right: clamp(1rem, 2vw, 1.75rem);
+  bottom: -0.15em;
+  z-index: -1;
+  font-family: var(--font-serif);
+  font-size: clamp(5rem, 10vw, 8.5rem);
+  line-height: 1;
+  color: var(--tone);
+  opacity: 0.14;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.45s ease;
+}
+
+.card:hover .number,
+.card:focus-visible .number {
+  opacity: 0.24;
+}
+
+.excerpt {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  font-style: italic;
+  line-height: 1.45;
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+
+.excerpt::before {
+  content: "“";
+}
+
+.excerpt::after {
+  content: "”";
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 1.75rem;
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--tone);
+}
+
+.kind {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.read {
+  margin-left: auto;
+  color: var(--tone);
+  opacity: 0;
+  transform: translateX(-0.5rem);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.card:hover .read,
+.card:focus-visible .read {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .number,
+  .read {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+}

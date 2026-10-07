@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 import type { Corto } from "@/lib/cortos";
 import styles from "./Corto.module.css";
@@ -53,19 +53,54 @@ function CortoMeta({ corto }: { corto: Corto }) {
   );
 }
 
-export function CortoFeature({ corto }: { corto: Corto }) {
+/**
+ * Sala de proyección: al entrar, las luces bajan y el corto se proyecta en el
+ * centro, bajo el haz del proyector.
+ */
+export function ScreeningRoom({
+  corto,
+  className = "",
+  heading,
+}: {
+  corto: Corto;
+  className?: string;
+  heading: ReactNode;
+}) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [lightsOff, setLightsOff] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setLightsOff(entry.isIntersecting),
+      { threshold: 0.35 },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={styles.feature}>
-      <Reveal className={styles.featureMedia}>
+    <section
+      ref={sectionRef}
+      id="cortos"
+      className={`${className} ${styles.screening} ${lightsOff ? styles.lightsOff : ""}`}
+    >
+      {heading}
+
+      <Reveal className={styles.screen}>
         <CortoVideo corto={corto} autoPlay />
       </Reveal>
-      <Reveal className={styles.featureText} delayMs={120}>
-        <p className={styles.label}>Corto destacado</p>
-        <h3 className={styles.featureTitle}>{corto.title}</h3>
-        <CortoMeta corto={corto} />
+
+      <Reveal className={styles.caption} delayMs={120}>
+        <p className={styles.kind}>
+          Corto · {corto.year} · {corto.duration}
+        </p>
+        <h3 className={styles.screenTitle}>{corto.title}</h3>
         {corto.synopsis ? <p className={styles.synopsis}>{corto.synopsis}</p> : null}
       </Reveal>
-    </div>
+
+    </section>
   );
 }
 

@@ -1,5 +1,5 @@
 .about {
-  padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+  padding: clamp(4rem, 9vw, 7rem) 0;
   color: #f4f1ea;
   /* Casi como la portada, con un leve tinte del verde de la web. */
   background:
@@ -10,23 +10,38 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
   align-items: center;
 }
 
+/* El retrato en grande, con su luz de techo como el resto de las obras. */
 .figure {
+  position: relative;
+  isolation: isolate;
   width: 100%;
-  max-width: 34rem;
 }
 
-/* La foto se muestra entera, con su proporción original. */
+.figure::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -10% 35%;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side at 50% 45%,
+    rgba(255, 240, 215, 0.08),
+    rgba(255, 240, 215, 0.03) 55%,
+    transparent
+  );
+  pointer-events: none;
+}
+
 .photo {
   display: block;
   width: 100%;
   height: auto;
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.3),
-    0 24px 56px rgba(0, 0, 0, 0.45);
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 24px 56px rgba(0, 0, 0, 0.5);
 }
 
 .text {
@@ -36,11 +51,20 @@
   max-width: 34rem;
 }
 
+/* El saludo, en grande: el mismo título de la portada. */
+.hello {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2.2rem, 4.6vw, 3.75rem);
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+}
+
 .lead {
-  margin: 0.25rem 0 0;
+  margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(1.3rem, 2.1vw, 1.75rem);
-  line-height: 1.45;
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .lead em {
@@ -56,10 +80,6 @@
 
 @media (min-width: 960px) {
   .grid {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .figure {
-    width: clamp(20rem, 38vw, 34rem);
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   }
 }

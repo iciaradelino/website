@@ -34,6 +34,108 @@
   line-height: 1.1;
 }
 
+/* Rótulo de sala: el mismo par de líneas que el título de la portada, con el enlace a la derecha. */
+.roomHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem);
+}
+
+.roomHeading.tight {
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.roomTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.kicker {
+  margin: 0;
+  font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* El enlace de la sala, con la letra de las cartelas y un filete fino debajo. */
+.roomLinkWrap {
+  flex-shrink: 0;
+}
+
+.roomLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.roomLinkArrow {
+  transition: transform 0.3s ease;
+}
+
+.roomLink:hover,
+.roomLink:focus-visible {
+  color: var(--accent-light);
+  border-color: var(--accent-light);
+}
+
+.roomLink:hover .roomLinkArrow,
+.roomLink:focus-visible .roomLinkArrow {
+  transform: translateX(0.3rem);
+}
+
+.roomLink:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 4px;
+}
+
+/* Sala centrada: el título en medio y el enlace en el borde derecho. */
+.roomHeading.centered {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.centered .roomTitles {
+  grid-column: 2;
+  align-items: center;
+  text-align: center;
+}
+
+.centered .roomLinkWrap {
+  grid-column: 3;
+  justify-self: end;
+}
+
+@media (max-width: 600px) {
+  .roomHeading.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roomLink,
+  .roomLinkArrow {
+    transition: none;
+  }
+}
+
 .pageTitle {
   margin: 0;
   font-size: clamp(1.85rem, 4vw, 3rem);
@@ -49,48 +151,4 @@
   letter-spacing: 0.01em;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.78);
-}
-
-.pill {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  min-width: 96px;
-  height: 42px;
-  padding: 0 1.1rem;
-  border-radius: 50px;
-  background: var(--accent);
-  color: #f4f1ea;
-  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  transition:
-    transform 0.25s ease,
-    filter 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.pill:hover {
-  filter: brightness(1.15);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.pill:active {
-  transform: translateY(0);
-}
-
-.pillIcon {
-  width: 1.05rem;
-  height: 1.05rem;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pill {
-    transition: none;
-  }
 }
