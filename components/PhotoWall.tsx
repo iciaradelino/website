@@ -5,6 +5,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { Lightbox } from "@/components/Lightbox";
 import { Reveal } from "@/components/Reveal";
 import { pickRandomPhotos, type Photo } from "@/lib/photos";
+import { useDictionary } from "@/lib/useLang";
 import styles from "./PhotoWall.module.css";
 
 type PhotoWallProps = {
@@ -45,6 +46,7 @@ export function PhotoWall({ photos }: PhotoWallProps) {
   // Se eligen en el navegador para que cambien en cada visita (la página es estática).
   const [hung, setHung] = useState<Partial<Record<Slot, Photo>> | null>(null);
   const [open, setOpen] = useState<number | null>(null);
+  const t = useDictionary().photos;
 
   useEffect(() => {
     setHung(hang(photos));
@@ -69,7 +71,7 @@ export function PhotoWall({ photos }: PhotoWallProps) {
           type="button"
           className={styles.frame}
           onClick={() => setOpen(index)}
-          aria-label={`Ampliar foto: ${photo.alt}`}
+          aria-label={t.enlarge(photo.alt)}
         >
           <Image
             className={styles.photo}

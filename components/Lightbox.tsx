@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, type MouseEvent, type TouchEvent } from "react";
 import type { Photo } from "@/lib/photos";
+import { useDictionary } from "@/lib/useLang";
 import styles from "./Lightbox.module.css";
 
 type LightboxProps = {
@@ -12,6 +13,7 @@ type LightboxProps = {
 };
 
 export function Lightbox({ photos, index, onChange }: LightboxProps) {
+  const t = useDictionary().photos;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const touchX = useRef<number | null>(null);
   const photo = index === null ? null : photos[index];
@@ -65,7 +67,7 @@ export function Lightbox({ photos, index, onChange }: LightboxProps) {
     <dialog
       ref={dialogRef}
       className={styles.dialog}
-      aria-label={photo?.alt ?? "Foto ampliada"}
+      aria-label={photo?.alt ?? t.enlarged}
       onClose={close}
       onClick={closeOnBackdrop}
       onTouchStart={onTouchStart}
@@ -94,7 +96,7 @@ export function Lightbox({ photos, index, onChange }: LightboxProps) {
         type="button"
         className={`${styles.control} ${styles.close}`}
         onClick={close}
-        aria-label="Cerrar"
+        aria-label={t.close}
       >
         <svg viewBox="0 0 24 24" aria-hidden>
           <path d="M6 6l12 12M18 6L6 18" />
@@ -107,7 +109,7 @@ export function Lightbox({ photos, index, onChange }: LightboxProps) {
             type="button"
             className={`${styles.control} ${styles.prev}`}
             onClick={() => step(-1)}
-            aria-label="Foto anterior"
+            aria-label={t.previous}
           >
             <svg viewBox="0 0 24 24" aria-hidden>
               <path d="M15 5l-7 7 7 7" />
@@ -117,7 +119,7 @@ export function Lightbox({ photos, index, onChange }: LightboxProps) {
             type="button"
             className={`${styles.control} ${styles.next}`}
             onClick={() => step(1)}
-            aria-label="Foto siguiente"
+            aria-label={t.next}
           >
             <svg viewBox="0 0 24 24" aria-hidden>
               <path d="M9 5l7 7-7 7" />

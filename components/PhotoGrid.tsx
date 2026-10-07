@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Lightbox } from "@/components/Lightbox";
 import { Reveal } from "@/components/Reveal";
 import type { Photo } from "@/lib/photos";
+import { useDictionary } from "@/lib/useLang";
 import styles from "./PhotoGrid.module.css";
 
 const COLUMNS = 3;
@@ -43,6 +44,7 @@ export function PhotoGrid({ photos, layout = "columns" }: PhotoGridProps) {
   // Solo las fotos con imagen se pueden ampliar.
   const viewable = photos.filter((photo) => photo.src);
   const [open, setOpen] = useState<number | null>(null);
+  const t = useDictionary().photos;
 
   const renderFigure = (photo: Photo, sizes: string) => (
     <figure className={styles.figure}>
@@ -51,7 +53,7 @@ export function PhotoGrid({ photos, layout = "columns" }: PhotoGridProps) {
           type="button"
           className={styles.zoom}
           onClick={() => setOpen(viewable.indexOf(photo))}
-          aria-label={`Ampliar foto: ${photo.alt}`}
+          aria-label={t.enlarge(photo.alt)}
         >
           <Image
             className={styles.photo}

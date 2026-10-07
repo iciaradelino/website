@@ -1,3 +1,6 @@
+import type { Lang } from "@/lib/i18n";
+import { storiesEn } from "@/lib/stories.en";
+
 export type Story = {
   id: string;
   slug: string;
@@ -5,7 +8,7 @@ export type Story = {
   description: string;
   summary: string;
   accent: string;
-  /** Idioma del texto, si no es español. */
+  /** Idioma del texto, si no es el de la página. */
   lang?: string;
   /** Indicación que acompaña al título (p. ej. una canción para leerlo). */
   epigraph?: string;
@@ -16,7 +19,17 @@ export type Story = {
   note?: string;
 };
 
-export const stories: Story[] = [
+/** Campos de una historia que se pueden traducir. */
+export type StoryTranslation = Partial<
+  Pick<Story, "title" | "summary" | "description" | "epigraph" | "excerpt" | "note" | "content">
+>;
+
+const translations: Partial<Record<Lang, Record<string, StoryTranslation>>> = {
+  en: storiesEn,
+};
+
+/** Las historias tal y como se escribieron (en español salvo que indiquen `lang`). */
+const originals: Story[] = [
   {
     id: "1",
     slug: "aquel-prado-en-el-que-vivimos",
@@ -240,29 +253,41 @@ export const stories: Story[] = [
   },
 ];
 
-export function getStory(slug: string) {
-  return stories.find((story) => story.slug === slug);
+/**
+ * Las historias en el idioma de la página. Si una no está traducida se muestra
+ * el original; `lang` queda marcado solo cuando el texto no está en el idioma de la página.
+ */
+export function getStories(lang: Lang): Story[] {
+  return originals.map((story) => {
+    const translation = translations[lang]?.[story.id] ?? {};
+    const textLang = translation.content ? lang : (story.lang ?? "es");
+    return {
+      ...story,
+      ...translation,
+      lang: textLang === lang ? undefined : textLang,
+    };
+  });
 }
 
-export function getOtherStories(slug: string, limit = 3) {
-  return stories.filter((story) => story.slug !== slug).slice(0, limit);
+export function getStory(lang: Lang, slug: string) {
+  return getStories(lang).find((story) => story.slug === slug);
 }
 
-export function formatStoryDate(iso: string) {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(`${iso}T00:00:00`));
+export function getOtherStories(lang: Lang, slug: string, limit = 3) {
+  return getStories(lang)
+    .filter((story) => story.slug !== slug)
+    .slice(0, limit);
 }
+
+export const storySlugs = originals.map((story) => story.slug);
 
 /** Separadores como «—oo0oo—» que dividen una historia en partes. */
 export function isSectionBreak(paragraph: string) {
   return /^[-—–]*oo0oo[-—–]*$/.test(paragraph.trim());
 }
 
-export function storyPath(slug: string) {
-  return `/historias/${slug}`;
+export function storyPath(lang: Lang, slug: string) {
+  return `/${lang}/historias/${slug}`;
 }
 
 /**

@@ -10,9 +10,11 @@ import {
   type SyntheticEvent,
 } from "react";
 import { Lightbox } from "@/components/Lightbox";
-import { cortos, type Corto } from "@/lib/cortos";
-import { photos, type Photo } from "@/lib/photos";
-import { stories, storyExcerpt, storyPath, type Story } from "@/lib/stories";
+import { getCortos, type Corto } from "@/lib/cortos";
+import { localePath, type Lang } from "@/lib/i18n";
+import { getPhotos, type Photo } from "@/lib/photos";
+import { getStories, storyExcerpt, storyPath, type Story } from "@/lib/stories";
+import { useDictionary, useLang } from "@/lib/useLang";
 import { useDrift } from "@/lib/useDrift";
 import styles from "./GalleryWall.module.css";
 
@@ -43,15 +45,15 @@ function shuffle<T>(list: T[]) {
  * Elige las obras al azar y las intercala para que no queden dos del mismo
  * tipo seguidas: cada vez se toma el tipo que más obras tiene pendientes.
  */
-function pickWorks(): Work[] {
+function pickWorks(lang: Lang): Work[] {
   const pools: Record<Work["kind"], Work[]> = {
-    story: shuffle(stories)
+    story: shuffle(getStories(lang))
       .slice(0, COUNTS.story)
       .map((story) => ({ kind: "story", story })),
-    photo: shuffle(photos.filter((p) => p.src))
+    photo: shuffle(getPhotos(lang).filter((p) => p.src))
       .slice(0, COUNTS.photo)
       .map((photo) => ({ kind: "photo", photo })),
-    corto: shuffle(cortos.filter((c) => c.src))
+    corto: shuffle(getCortos(lang).filter((c) => c.src))
       .slice(0, COUNTS.corto)
       .map((corto) => ({ kind: "corto", corto })),
   };
@@ -95,6 +97,8 @@ function StoryPlate({ story }: { story: Story }) {
 }
 
 export function GalleryWall() {
+  const lang = useLang();
+  const t = useDictionary();
   // Se eligen en el navegador para que cambien en cada visita (la página es estática).
   const [works, setWorks] = useState<Work[] | null>(null);
   const [open, setOpen] = useState<number | null>(null);
@@ -108,8 +112,8 @@ export function GalleryWall() {
   });
 
   useEffect(() => {
-    setWorks(pickWorks());
-  }, []);
+    setWorks(pickWorks(lang));
+  }, [lang]);
 
   const wallPhotos = (works ?? []).flatMap((w) => (w.kind === "photo" ? [w.photo] : []));
 
@@ -151,11 +155,11 @@ export function GalleryWall() {
       case "story": {
         const { story } = work;
         return (
-          <Link href={storyPath(story.slug)} className={styles.link} draggable={false}>
+          <Link href={storyPath(lang, story.slug)} className={styles.link} draggable={false}>
             <span className={styles.frame}>
               <StoryPlate story={story} />
             </span>
-            <Label kind={["Historia", yearOf(story.date)]} name={story.title} />
+            <Label kind={[t.stories.story, yearOf(story.date)]} name={story.title} />
           </Link>
         );
       }
@@ -166,7 +170,7 @@ export function GalleryWall() {
             type="button"
             className={styles.link}
             onClick={() => setOpen(wallPhotos.indexOf(photo))}
-            aria-label={`Ampliar foto: ${photo.alt}`}
+            aria-label={t.photos.enlarge(photo.alt)}
           >
             <span className={styles.frame}>
               <Image
@@ -178,14 +182,14 @@ export function GalleryWall() {
                 draggable={false}
               />
             </span>
-            <Label kind={["Fotografía"]} name={photo.caption ?? "Sin título"} />
+            <Label kind={[t.photos.photograph]} name={photo.caption ?? t.photos.untitled} />
           </button>
         );
       }
       case "corto": {
         const { corto } = work;
         return (
-          <Link href="/cortos" className={styles.link} draggable={false}>
+          <Link href={localePath(lang, "/cortos")} className={styles.link} draggable={false}>
             <span className={styles.frame}>
               <video
                 className={styles.media}
@@ -198,7 +202,7 @@ export function GalleryWall() {
                 aria-hidden
               />
             </span>
-            <Label kind={["Corto", corto.year, corto.duration]} name={corto.title} />
+            <Label kind={[t.cortos.corto, corto.year, corto.duration]} name={corto.title} />
           </Link>
         );
       }
@@ -228,7 +232,7 @@ export function GalleryWall() {
     <section id="home" className={styles.hero}>
       <header className={styles.intro}>
         <h1 className={styles.title}>Yukan</h1>
-        <p className={styles.subtitle}>Historias, fotografías y cortos</p>
+        <p className={styles.subtitle}>{t.hero.subtitle}</p>
       </header>
 
       <div

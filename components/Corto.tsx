@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 import type { Corto } from "@/lib/cortos";
+import { useDictionary } from "@/lib/useLang";
 import styles from "./Corto.module.css";
 
 function CortoVideo({ corto, autoPlay = false }: { corto: Corto; autoPlay?: boolean }) {
+  const t = useDictionary().cortos;
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Se reproduce sin sonido mientras está a la vista (los navegadores solo dejan
@@ -24,8 +26,8 @@ function CortoVideo({ corto, autoPlay = false }: { corto: Corto; autoPlay?: bool
 
   if (!corto.src) {
     return (
-      <div className={styles.placeholder} role="img" aria-label="Corto próximamente">
-        <span className={styles.soon}>próximamente</span>
+      <div className={styles.placeholder} role="img" aria-label={t.soonLabel}>
+        <span className={styles.soon}>{t.soon}</span>
       </div>
     );
   }
@@ -66,6 +68,7 @@ export function ScreeningRoom({
   className?: string;
   heading: ReactNode;
 }) {
+  const t = useDictionary().cortos;
   const sectionRef = useRef<HTMLElement>(null);
   const [lightsOff, setLightsOff] = useState(false);
 
@@ -94,7 +97,7 @@ export function ScreeningRoom({
 
       <Reveal className={styles.caption} delayMs={120}>
         <p className={styles.kind}>
-          Corto · {corto.year} · {corto.duration}
+          {t.corto} · {corto.year} · {corto.duration}
         </p>
         <h3 className={styles.screenTitle}>{corto.title}</h3>
         {corto.synopsis ? <p className={styles.synopsis}>{corto.synopsis}</p> : null}

@@ -1,10 +1,12 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Reveal } from "@/components/Reveal";
+import { getDictionary, isLang, type Lang } from "@/lib/i18n";
 import { readingMinutes, storyExcerpt, storyPath, type Story } from "@/lib/stories";
 import styles from "./StoryGrid.module.css";
 
 type StoryGridProps = {
+  lang: Lang;
   stories: Story[];
 };
 
@@ -15,7 +17,9 @@ type StoryGridProps = {
 const TONES = ["#a9c7b1", "#d8b46a", "#d99a9a", "#9fb4d6", "#c7a6d9", "#d7926b"];
 
 /** Rejilla de dos columnas: cada historia es una lámina con su propio color. */
-export function StoryGrid({ stories }: StoryGridProps) {
+export function StoryGrid({ lang, stories }: StoryGridProps) {
+  const t = getDictionary(lang).stories;
+
   return (
     <ol className={styles.grid}>
       {stories.map((story, index) => (
@@ -26,7 +30,7 @@ export function StoryGrid({ stories }: StoryGridProps) {
           delayMs={(index % 2) * 100 + Math.min(index, 6) * 40}
         >
           <Link
-            href={storyPath(story.slug)}
+            href={storyPath(lang, story.slug)}
             className={styles.card}
             style={{ "--tone": TONES[index % TONES.length] } as CSSProperties}
           >
@@ -41,10 +45,10 @@ export function StoryGrid({ stories }: StoryGridProps) {
                 {story.title}
               </span>
               <span className={styles.kind}>
-                {readingMinutes(story)} min de lectura
-                {story.lang === "en" ? " · en inglés" : ""}
+                {t.minRead(readingMinutes(story))}
+                {isLang(story.lang) ? ` · ${t.inLanguage[story.lang]}` : ""}
                 <span className={styles.read} aria-hidden>
-                  leer →
+                  {t.read}
                 </span>
               </span>
             </span>

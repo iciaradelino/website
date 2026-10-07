@@ -4,21 +4,16 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
 import { StoryIndex } from "@/components/StoryIndex";
-import {
-  formatStoryDate,
-  getOtherStories,
-  getStory,
-  isSectionBreak,
-  stories,
-} from "@/lib/stories";
+import { formatDate, getDictionary, locales, type Lang } from "@/lib/i18n";
+import { getOtherStories, getStory, isSectionBreak, storySlugs } from "@/lib/stories";
 import styles from "./page.module.css";
 
 type StoryPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: Lang; slug: string }>;
 };
 
 export function generateStaticParams() {
-  return stories.map((story) => ({ slug: story.slug }));
+  return locales.flatMap((lang) => storySlugs.map((slug) => ({ lang, slug })));
 }
 
 export const dynamicParams = false;
@@ -26,22 +21,24 @@ export const dynamicParams = false;
 export async function generateMetadata({
   params,
 }: StoryPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const story = getStory(slug);
-  if (!story) return { title: "Historia" };
+  const { lang, slug } = await params;
+  const { meta } = getDictionary(lang);
+  const story = getStory(lang, slug);
+  if (!story) return { title: meta.storyFallback };
 
   return {
-    title: `${story.title} · Historias de Gonzalo`,
+    title: `${story.title} · ${meta.siteTitle}`,
     description: story.summary,
   };
 }
 
 export default async function StoryPage({ params }: StoryPageProps) {
-  const { slug } = await params;
-  const story = getStory(slug);
+  const { lang, slug } = await params;
+  const t = getDictionary(lang);
+  const story = getStory(lang, slug);
   if (!story) notFound();
 
-  const others = getOtherStories(slug);
+  const others = getOtherStories(lang, slug);
 
   return (
     <>
@@ -61,7 +58,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
             ) : null}
             {story.date ? (
               <Reveal as="p" className={styles.date} delayMs={80}>
-                <time dateTime={story.date}>{formatStoryDate(story.date)}</time>
+                <time dateTime={story.date}>{formatDate(lang, story.date)}</time>
               </Reveal>
             ) : null}
             <div className={styles.body}>
@@ -78,10 +75,10 @@ export default async function StoryPage({ params }: StoryPageProps) {
               )}
             </div>
             {story.note ? (
-              <aside className={styles.note} aria-label="Nota del autor">
+              <aside className={styles.note} aria-label={t.stories.authorNote}>
                 <hr className={styles.noteRule} />
                 <Reveal delayMs={80}>
-                  <p className={styles.noteLabel}>Nota del autor</p>
+                  <p className={styles.noteLabel}>{t.stories.authorNote}</p>
                   <p className={styles.noteText}>{story.note}</p>
                 </Reveal>
               </aside>
@@ -89,17 +86,17 @@ export default async function StoryPage({ params }: StoryPageProps) {
           </div>
         </article>
 
-        <section className={styles.others} aria-label="Otras historias">
+        <section className={styles.others} aria-label={t.stories.others}>
           <div className={styles.inner}>
             <Reveal as="h2" className={styles.sectionTitle}>
-              Otras historias
+              {t.stories.others}
             </Reveal>
             <StoryIndex stories={others} />
           </div>
         </section>
 
         <Reveal>
-          <Footer />
+          <Footer lang={lang} />
         </Reveal>
       </main>
     </>

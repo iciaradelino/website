@@ -43,7 +43,8 @@
 }
 
 .nav,
-.secondary {
+.secondary,
+.sections {
   display: flex;
   align-items: center;
   gap: clamp(1.25rem, 3vw, 2.5rem);
@@ -51,6 +52,37 @@
 
 .secondary {
   justify-self: end;
+}
+
+/* Selector de idioma: el actual resaltado, el otro como enlace. */
+.langSwitch {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding-left: clamp(0.9rem, 2vw, 1.5rem);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: clamp(0.72rem, 1vw, 0.82rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.langCurrent,
+.langOption {
+  padding: 0.2rem 0.3rem;
+}
+
+.langCurrent {
+  color: var(--accent-light);
+  font-weight: 700;
+}
+
+.langOption {
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.25s ease;
+}
+
+.langOption:hover {
+  color: #fff;
 }
 
 @media (max-width: 640px) {
@@ -77,8 +109,18 @@
   }
 
   .nav,
-  .secondary {
+  .secondary,
+  .sections {
     gap: 1.1rem;
+  }
+
+  .secondary {
+    gap: 0.8rem;
+  }
+
+  .langSwitch {
+    padding-left: 0.6rem;
+    font-size: 0.72rem;
   }
 
   .link {
@@ -132,7 +174,8 @@
   .header,
   .logo,
   .link,
-  .link::after {
+  .link::after,
+  .langOption {
     transition: none;
   }
 }

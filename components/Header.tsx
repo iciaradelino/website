@@ -3,23 +3,36 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { LOCALE_COOKIE, localePath, locales, type Lang } from "@/lib/i18n";
+import { useDictionary, useLang } from "@/lib/useLang";
 import styles from "./Header.module.css";
 
-const links = [
-  { href: "/historias", label: "historias" },
-  { href: "/fotos", label: "fotos" },
-  { href: "/cortos", label: "cortos" },
-];
-
-const sectionLinks = [
-  { href: "/#about", label: "sobre mí" },
-  { href: "/#contact", label: "contacto" },
-];
+/** Guarda el idioma elegido para que las próximas visitas a "/" lo respeten. */
+function rememberLang(lang: Lang) {
+  document.cookie = `${LOCALE_COOKIE}=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
 
 export function Header() {
+  const lang = useLang();
+  const t = useDictionary();
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const home = localePath(lang);
+  const isHome = pathname === home;
   const [scrolled, setScrolled] = useState(!isHome);
+
+  // La misma página en el otro idioma: solo cambia el primer tramo de la ruta.
+  const rest = pathname.slice(home.length);
+
+  const links = [
+    { href: localePath(lang, "/historias"), label: t.nav.stories },
+    { href: localePath(lang, "/fotos"), label: t.nav.photos },
+    { href: localePath(lang, "/cortos"), label: t.nav.cortos },
+  ];
+
+  const sectionLinks = [
+    { href: localePath(lang, "/#about"), label: t.nav.about },
+    { href: localePath(lang, "/#contact"), label: t.nav.contact },
+  ];
 
   useEffect(() => {
     const onScroll = () => {
@@ -34,10 +47,10 @@ export function Header() {
     <header
       className={`${styles.header} ${scrolled ? styles.scrolled : styles.top}`}
     >
-      <Link href={isHome ? "#home" : "/"} className={styles.logo}>
+      <Link href={isHome ? "#home" : home} className={styles.logo}>
         Yukan
       </Link>
-      <nav className={styles.nav} aria-label="principal">
+      <nav className={styles.nav} aria-label={t.nav.main}>
         {links.map((link) => {
           const active = pathname.startsWith(link.href);
           return (
@@ -52,13 +65,36 @@ export function Header() {
           );
         })}
       </nav>
-      <nav className={styles.secondary} aria-label="secciones">
-        {sectionLinks.map((link) => (
-          <Link key={link.href} href={link.href} className={styles.link}>
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      <div className={styles.secondary}>
+        <nav className={styles.sections} aria-label={t.nav.sections}>
+          {sectionLinks.map((link) => (
+            <Link key={link.href} href={link.href} className={styles.link}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <div className={styles.langSwitch} role="group" aria-label={t.nav.language}>
+          {locales.map((code) =>
+            code === lang ? (
+              <span key={code} className={styles.langCurrent} aria-current="true">
+                {code}
+              </span>
+            ) : (
+              <Link
+                key={code}
+                href={`/${code}${rest}`}
+                hrefLang={code}
+                lang={code}
+                className={styles.langOption}
+                onClick={() => rememberLang(code)}
+                scroll={false}
+              >
+                {code}
+              </Link>
+            ),
+          )}
+        </div>
+      </div>
     </header>
   );
 }

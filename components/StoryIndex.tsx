@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { readingMinutes, storyExcerpt, storyPath, type Story } from "@/lib/stories";
+import { useDictionary, useLang } from "@/lib/useLang";
 import styles from "./StoryIndex.module.css";
 
 type StoryIndexProps = {
@@ -14,11 +15,14 @@ type StoryIndexProps = {
  * una cartela debajo, como en el índice de una antología de poesía.
  */
 export function StoryIndex({ stories }: StoryIndexProps) {
+  const lang = useLang();
+  const t = useDictionary().stories;
+
   return (
     <ol className={styles.index}>
       {stories.map((story, index) => (
         <Reveal key={story.id} as="li" className={styles.row} delayMs={index * 80}>
-          <Link href={storyPath(story.slug)} className={styles.link}>
+          <Link href={storyPath(lang, story.slug)} className={styles.link}>
             <span className={styles.number} aria-hidden>
               {String(index + 1).padStart(2, "0")}
             </span>
@@ -28,7 +32,7 @@ export function StoryIndex({ stories }: StoryIndexProps) {
               </span>
               <span className={styles.label}>
                 <span className={styles.kind}>
-                  Historia · {readingMinutes(story)} min de lectura
+                  {t.story} · {t.minRead(readingMinutes(story))}
                 </span>
                 <span className={styles.name} lang={story.lang}>
                   {story.title}
@@ -36,7 +40,7 @@ export function StoryIndex({ stories }: StoryIndexProps) {
               </span>
             </span>
             <span className={styles.read} aria-hidden>
-              leer →
+              {t.read}
             </span>
           </Link>
         </Reveal>

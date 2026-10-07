@@ -3,15 +3,26 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { Reveal } from "@/components/Reveal";
-import { photos } from "@/lib/photos";
+import { getDictionary, type Lang } from "@/lib/i18n";
+import { getPhotos } from "@/lib/photos";
 import ui from "@/components/ui.module.css";
 
-export const metadata: Metadata = {
-  title: "Fotos · Historias de Gonzalo",
-  description: "Lugares y momentos que acompañan a las historias",
+type FotosPageProps = {
+  params: Promise<{ lang: Lang }>;
 };
 
-export default function FotosPage() {
+export async function generateMetadata({ params }: FotosPageProps): Promise<Metadata> {
+  const { meta } = getDictionary((await params).lang);
+  return {
+    title: `${meta.photosTitle} · ${meta.siteTitle}`,
+    description: meta.photosDescription,
+  };
+}
+
+export default async function FotosPage({ params }: FotosPageProps) {
+  const { lang } = await params;
+  const t = getDictionary(lang);
+
   return (
     <>
       <Header />
@@ -21,18 +32,18 @@ export default function FotosPage() {
             <div className={ui.headingRow}>
               <div>
                 <Reveal as="h1" className={ui.pageTitle}>
-                  Fotos
+                  {t.photos.pageTitle}
                 </Reveal>
                 <Reveal as="p" className={ui.lede} delayMs={80}>
-                  Lugares y momentos que acompañan a las historias.
+                  {t.photos.lede}
                 </Reveal>
               </div>
             </div>
-            <PhotoGrid photos={photos} />
+            <PhotoGrid photos={getPhotos(lang)} />
           </div>
         </section>
         <Reveal>
-          <Footer />
+          <Footer lang={lang} />
         </Reveal>
       </main>
     </>

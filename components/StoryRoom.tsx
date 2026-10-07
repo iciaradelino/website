@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { Reveal } from "@/components/Reveal";
 import { readingMinutes, storyExcerpt, storyPath, type Story } from "@/lib/stories";
+import { useDictionary, useLang } from "@/lib/useLang";
 import styles from "./StoryRoom.module.css";
 
 type StoryRoomProps = {
@@ -25,6 +26,8 @@ function plateSize(excerpt: string) {
  * frase del título que se señala. Las dos columnas miden lo mismo.
  */
 export function StoryRoom({ stories, heading, link }: StoryRoomProps) {
+  const lang = useLang();
+  const t = useDictionary().stories;
   const [active, setActive] = useState(0);
 
   // Cada visita empieza con una historia distinta bajo la luz.
@@ -44,7 +47,7 @@ export function StoryRoom({ stories, heading, link }: StoryRoomProps) {
         {stories.map((s, index) => (
           <li key={s.id}>
             <Link
-              href={storyPath(s.slug)}
+              href={storyPath(lang, s.slug)}
               className={`${styles.entry} ${index === active ? styles.current : ""}`}
               onPointerEnter={() => setActive(index)}
               onFocus={() => setActive(index)}
@@ -69,7 +72,7 @@ export function StoryRoom({ stories, heading, link }: StoryRoomProps) {
 
       <Reveal className={styles.stage} delayMs={180}>
         <Link
-          href={storyPath(story.slug)}
+          href={storyPath(lang, story.slug)}
           className={styles.stageLink}
           tabIndex={-1}
           aria-hidden
@@ -90,7 +93,7 @@ export function StoryRoom({ stories, heading, link }: StoryRoomProps) {
           </span>
           <span className={styles.label}>
             <span className={styles.kind}>
-              Historia · {readingMinutes(story)} min de lectura
+              {t.story} · {t.minRead(readingMinutes(story))}
             </span>
             <span key={story.id} className={styles.name}>
               {story.title}

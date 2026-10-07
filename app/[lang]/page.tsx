@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useMemo, type ReactNode } from "react";
 import Link from "next/link";
 import { About } from "@/components/About";
 import { ScreeningRoom } from "@/components/Corto";
@@ -10,9 +10,11 @@ import { Header } from "@/components/Header";
 import { PhotoWall } from "@/components/PhotoWall";
 import { Reveal } from "@/components/Reveal";
 import { StoryRoom } from "@/components/StoryRoom";
-import { featuredCorto } from "@/lib/cortos";
-import { photos } from "@/lib/photos";
-import { stories } from "@/lib/stories";
+import { getFeaturedCorto } from "@/lib/cortos";
+import { localePath } from "@/lib/i18n";
+import { getPhotos } from "@/lib/photos";
+import { getStories } from "@/lib/stories";
+import { useDictionary, useLang } from "@/lib/useLang";
 import ui from "@/components/ui.module.css";
 import styles from "./page.module.css";
 
@@ -65,6 +67,11 @@ function RoomHeading({
 }
 
 export default function HomePage() {
+  const lang = useLang();
+  const t = useDictionary();
+  // Misma lista entre renders, para que la pared de fotos no se vuelva a colgar.
+  const photos = useMemo(() => getPhotos(lang), [lang]);
+
   useEffect(() => {
     const id = window.location.hash.slice(1);
     if (!id) return;
@@ -80,18 +87,18 @@ export default function HomePage() {
         <section id="stories" className={`${ui.section} ${styles.storiesSection}`}>
           <div className={ui.inner}>
             <StoryRoom
-              stories={stories.slice(0, STORY_COUNT)}
-              heading={<RoomTitles room="Sala I" title="Historias destacadas" />}
-              link={<RoomLink href="/historias" label="ver todas" />}
+              stories={getStories(lang).slice(0, STORY_COUNT)}
+              heading={<RoomTitles room={t.home.room("I")} title={t.home.featuredStories} />}
+              link={<RoomLink href={localePath(lang, "/historias")} label={t.home.seeAllF} />}
             />
           </div>
         </section>
 
         <section id="photos" className={`${ui.section} ${styles.photosSection}`}>
           <RoomHeading
-            room="Sala II"
-            title="Fotos recientes"
-            link={{ href: "/fotos", label: "ver todas" }}
+            room={t.home.room("II")}
+            title={t.home.recentPhotos}
+            link={{ href: localePath(lang, "/fotos"), label: t.home.seeAllF }}
           />
           <div className={ui.inner}>
             <PhotoWall photos={photos} />
@@ -99,22 +106,22 @@ export default function HomePage() {
         </section>
 
         <ScreeningRoom
-          corto={featuredCorto}
+          corto={getFeaturedCorto(lang)}
           className={`${ui.section} ${styles.cortosSection}`}
           heading={
             <RoomHeading
-              room="Sala III"
-              title="Cortos"
-              link={{ href: "/cortos", label: "ver todos" }}
+              room={t.home.room("III")}
+              title={t.home.cortos}
+              link={{ href: localePath(lang, "/cortos"), label: t.home.seeAllM }}
               centered
             />
           }
         />
 
-        <About />
+        <About lang={lang} />
 
         <Reveal>
-          <Footer />
+          <Footer lang={lang} />
         </Reveal>
       </main>
     </>

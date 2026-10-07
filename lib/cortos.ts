@@ -1,3 +1,5 @@
+import type { Lang, Localized } from "@/lib/i18n";
+
 export type Corto = {
   id: string;
   slug: string;
@@ -10,11 +12,17 @@ export type Corto = {
   featured?: boolean;
 };
 
-export const cortos: Corto[] = [
+/** Un corto tal y como se guarda, con sus textos en cada idioma. */
+type CortoEntry = Omit<Corto, "title" | "synopsis"> & {
+  title: Localized;
+  synopsis?: Localized;
+};
+
+const entries: CortoEntry[] = [
   {
     id: "1",
     slug: "corto-1",
-    title: "Sin título I",
+    title: { es: "Sin título I", en: "Untitled I" },
     year: 2026,
     duration: "6 min",
     src: "/cortos/corto-1.mp4",
@@ -23,11 +31,23 @@ export const cortos: Corto[] = [
   {
     id: "2",
     slug: "corto-2",
-    title: "Sin título II",
+    title: { es: "Sin título II", en: "Untitled II" },
     year: 2026,
     duration: "8 min",
     src: "/cortos/corto-2.mp4",
   },
 ];
 
-export const featuredCorto = cortos.find((c) => c.featured) ?? cortos[0];
+/** Los cortos con sus textos en el idioma de la página. */
+export function getCortos(lang: Lang): Corto[] {
+  return entries.map(({ title, synopsis, ...corto }) => ({
+    ...corto,
+    title: title[lang],
+    synopsis: synopsis?.[lang],
+  }));
+}
+
+export function getFeaturedCorto(lang: Lang) {
+  const cortos = getCortos(lang);
+  return cortos.find((c) => c.featured) ?? cortos[0];
+}
