@@ -125,7 +125,6 @@
 .name {
   font-family: var(--font-serif);
   font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  letter-spacing: 0.12em;
 }
 
 .read {

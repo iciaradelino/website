@@ -22,9 +22,6 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  /* Algo más arriba que el centro, sin mover la pared de obras. */
-  position: relative;
-  top: -3vh;
   padding: 0 var(--page-pad-x);
   text-align: center;
   animation: rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -208,11 +205,10 @@
   opacity: 0.55;
 }
 
-/* Títulos de las obras: misma letra que el título de la portada. */
 .name {
   font-family: var(--font-serif);
   font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  letter-spacing: 0.12em;
+  font-style: italic;
   transition: color 0.25s ease;
 }
 
