@@ -43,10 +43,6 @@
   margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem);
 }
 
-.roomHeading.tight {
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
 .roomTitles {
   display: flex;
   flex-direction: column;

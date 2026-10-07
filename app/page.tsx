@@ -19,41 +19,47 @@ import styles from "./page.module.css";
 /** Cuántas historias se muestran en la sala de la portada. */
 const STORY_COUNT = 5;
 
+function RoomTitles({ room, title }: { room: string; title: ReactNode }) {
+  return (
+    <div className={ui.roomTitles}>
+      <Reveal as="p" className={ui.kicker}>
+        {room}
+      </Reveal>
+      <Reveal as="h2" className={ui.sectionTitle} delayMs={60}>
+        {title}
+      </Reveal>
+    </div>
+  );
+}
+
+function RoomLink({ href, label }: { href: string; label: string }) {
+  return (
+    <Reveal className={ui.roomLinkWrap} delayMs={120}>
+      <Link href={href} className={ui.roomLink}>
+        {label}
+        <span className={ui.roomLinkArrow} aria-hidden>
+          →
+        </span>
+      </Link>
+    </Reveal>
+  );
+}
+
 function RoomHeading({
   room,
   title,
   link,
   centered = false,
-  tight = false,
 }: {
   room: string;
   title: ReactNode;
   link?: { href: string; label: string };
   centered?: boolean;
-  tight?: boolean;
 }) {
   return (
-    <div
-      className={`${ui.inner} ${ui.roomHeading} ${centered ? ui.centered : ""} ${tight ? ui.tight : ""}`}
-    >
-      <div className={ui.roomTitles}>
-        <Reveal as="p" className={ui.kicker}>
-          {room}
-        </Reveal>
-        <Reveal as="h2" className={ui.sectionTitle} delayMs={60}>
-          {title}
-        </Reveal>
-      </div>
-      {link ? (
-        <Reveal className={ui.roomLinkWrap} delayMs={120}>
-          <Link href={link.href} className={ui.roomLink}>
-            {link.label}
-            <span className={ui.roomLinkArrow} aria-hidden>
-              →
-            </span>
-          </Link>
-        </Reveal>
-      ) : null}
+    <div className={`${ui.inner} ${ui.roomHeading} ${centered ? ui.centered : ""}`}>
+      <RoomTitles room={room} title={title} />
+      {link ? <RoomLink {...link} /> : null}
     </div>
   );
 }
@@ -72,15 +78,13 @@ export default function HomePage() {
         <GalleryWall />
 
         <section id="stories" className={`${ui.section} ${styles.storiesSection}`}>
-          <RoomHeading
-            room="Sala I"
-            title="Historias destacadas"
-            link={{ href: "/historias", label: "ver todas" }}
-            tight
-          />
-          <Reveal className={ui.inner} delayMs={120}>
-            <StoryRoom stories={stories.slice(0, STORY_COUNT)} />
-          </Reveal>
+          <div className={ui.inner}>
+            <StoryRoom
+              stories={stories.slice(0, STORY_COUNT)}
+              heading={<RoomTitles room="Sala I" title="Historias destacadas" />}
+              link={<RoomLink href="/historias" label="ver todas" />}
+            />
+          </div>
         </section>
 
         <section id="photos" className={`${ui.section} ${styles.photosSection}`}>

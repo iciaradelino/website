@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { Reveal } from "@/components/Reveal";
 import { readingMinutes, storyExcerpt, storyPath, type Story } from "@/lib/stories";
 import styles from "./StoryRoom.module.css";
 
 type StoryRoomProps = {
   stories: Story[];
+  /** Rótulo de la sala, arriba a la izquierda. */
+  heading: ReactNode;
+  /** Enlace a todas las historias, arriba a la derecha, sobre la lámina. */
+  link: ReactNode;
 };
 
 /** Cuanto más larga la frase, más pequeña la letra, para que quepa en la lámina. */
@@ -15,11 +20,11 @@ function plateSize(excerpt: string) {
 }
 
 /**
- * Sala de lectura: a la izquierda, la guía de la sala con todos los títulos;
- * a la derecha, una sola lámina bajo la luz con la primera frase del título
- * que se señala.
+ * Sala de lectura en dos columnas: a la izquierda, el rótulo y la guía con los
+ * títulos; a la derecha, el enlace y una sola lámina bajo la luz con la primera
+ * frase del título que se señala. Las dos columnas miden lo mismo.
  */
-export function StoryRoom({ stories }: StoryRoomProps) {
+export function StoryRoom({ stories, heading, link }: StoryRoomProps) {
   const [active, setActive] = useState(0);
 
   // Cada visita empieza con una historia distinta bajo la luz.
@@ -32,7 +37,10 @@ export function StoryRoom({ stories }: StoryRoomProps) {
 
   return (
     <div className={styles.room}>
-      <ol className={styles.guide}>
+      <div className={styles.heading}>{heading}</div>
+      <div className={styles.link}>{link}</div>
+
+      <Reveal as="ol" className={styles.guide} delayMs={120}>
         {stories.map((s, index) => (
           <li key={s.id}>
             <Link
@@ -57,17 +65,27 @@ export function StoryRoom({ stories }: StoryRoomProps) {
             </Link>
           </li>
         ))}
-      </ol>
+      </Reveal>
 
-      <div className={styles.stage} aria-hidden>
-        <Link href={storyPath(story.slug)} className={styles.plateLink} tabIndex={-1}>
-          <span className={styles.plate} lang={story.lang}>
-            <span
-              key={story.id}
-              className={styles.excerpt}
-              style={{ fontSize: `${plateSize(excerpt)}cqi` }}
-            >
-              {excerpt}
+      <Reveal className={styles.stage} delayMs={180}>
+        <Link
+          href={storyPath(story.slug)}
+          className={styles.stageLink}
+          tabIndex={-1}
+          aria-hidden
+        >
+          {/* La lámina ocupa el alto que queda y su ancho sale de la proporción 3:4. */}
+          <span className={styles.plateArea}>
+            <span className={styles.plateLink}>
+              <span className={styles.plate} lang={story.lang}>
+                <span
+                  key={story.id}
+                  className={styles.excerpt}
+                  style={{ fontSize: `${plateSize(excerpt)}cqi` }}
+                >
+                  {excerpt}
+                </span>
+              </span>
             </span>
           </span>
           <span className={styles.label}>
@@ -79,7 +97,7 @@ export function StoryRoom({ stories }: StoryRoomProps) {
             </span>
           </span>
         </Link>
-      </div>
+      </Reveal>
     </div>
   );
 }

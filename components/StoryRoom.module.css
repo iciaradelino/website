@@ -1,13 +1,31 @@
+/*
+ * Móvil: el rótulo con el enlace a su derecha y la lista debajo.
+ * Escritorio: dos columnas del mismo alto (rótulo + lista | enlace + lámina).
+ */
 .room {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "heading link"
+    "guide guide";
+  column-gap: 1.5rem;
+  row-gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.heading {
+  grid-area: heading;
+}
+
+.link {
+  grid-area: link;
+  align-self: end;
+  justify-self: end;
 }
 
 /* — Guía de la sala — */
 
 .guide {
+  grid-area: guide;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -93,13 +111,32 @@
   display: none;
 }
 
-/* El marco de la lámina mide su letra (cqi), como en la portada. */
-.plateLink {
-  position: relative;
-  isolation: isolate;
-  display: block;
-  container-type: inline-size;
+.stageLink {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
   color: inherit;
+  text-align: right;
+}
+
+/* El hueco que deja la cartela; la lámina lo llena de alto. */
+.plateArea {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  min-height: 0;
+}
+
+/* Pegada al borde derecho, como el enlace; el marco mide su letra (cqi). */
+.plateLink {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  aspect-ratio: 3 / 4;
+  isolation: isolate;
+  container-type: inline-size;
 }
 
 /* Luz de techo, como sobre las obras de la portada. */
@@ -121,7 +158,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  aspect-ratio: 3 / 4;
+  height: 100%;
+  text-align: left;
   padding: 14cqi 13cqi;
   background:
     radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.45), transparent 60%),
@@ -183,10 +221,12 @@
 }
 
 @media (min-width: 900px) {
-  /* La lista empieza justo bajo el título; la lámina, a su lado. */
   .room {
-    grid-template-columns: minmax(0, 1.25fr) minmax(13rem, 0.75fr);
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) clamp(14rem, 24vw, 20rem);
+    grid-template-areas:
+      "heading link"
+      "guide stage";
+    column-gap: clamp(2.5rem, 6vw, 6rem);
   }
 
   .inlineExcerpt {
@@ -195,9 +235,9 @@
 
   .stage {
     display: block;
-    width: 100%;
-    max-width: 16rem;
-    justify-self: center;
+    grid-area: stage;
+    /* Sin alto propio: lo marca la lista de al lado. */
+    min-height: 0;
   }
 }
 
