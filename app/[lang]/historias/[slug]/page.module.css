@@ -11,6 +11,12 @@
   padding: 0 var(--page-pad-x);
 }
 
+/* La historia va en una columna centrada en la página; dentro, todo alineado a la izquierda. */
+.article .inner {
+  max-width: calc(42rem + 2 * var(--page-pad-x));
+  margin: 0 auto;
+}
+
 .title {
   margin: 0;
   font-size: clamp(1.85rem, 4vw, 3rem);
@@ -57,6 +63,9 @@
   font-size: clamp(1.05rem, 1.55vw, 1.22rem);
   letter-spacing: 0.01em;
   line-height: 1.7;
+  /* Justificado; el guionado evita huecos grandes entre palabras en líneas cortas. */
+  text-align: justify;
+  hyphens: auto;
 }
 
 .note {
@@ -85,6 +94,8 @@
   letter-spacing: 0.01em;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.78);
+  text-align: justify;
+  hyphens: auto;
 }
 
 .others {
