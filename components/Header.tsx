@@ -29,14 +29,17 @@ export function Header() {
     { href: localePath(lang, "/cortos"), label: t.nav.cortos },
   ];
 
-  const sectionLinks = [
-    { href: localePath(lang, "/#about"), label: t.nav.about },
-    { href: localePath(lang, "/#contact"), label: t.nav.contact },
-  ];
+  // Se esconde al bajar y vuelve a aparecer en cuanto se sube un poco.
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
+    let lastY = window.scrollY;
     const onScroll = () => {
-      setScrolled(window.scrollY > 40 || !isHome);
+      const y = window.scrollY;
+      setScrolled(y > 40 || !isHome);
+      if (Math.abs(y - lastY) < 6) return;
+      setHidden(y > lastY && y > 120);
+      lastY = y;
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -45,7 +48,9 @@ export function Header() {
 
   return (
     <header
-      className={`${styles.header} ${scrolled ? styles.scrolled : styles.top}`}
+      className={`${styles.header} ${scrolled ? styles.scrolled : styles.top} ${hidden ? styles.hidden : ""}`}
+      // Si se navega con el teclado, la cabecera vuelve a verse.
+      onFocus={() => setHidden(false)}
     >
       <Link href={isHome ? "#home" : home} className={styles.logo}>
         Yukan
@@ -66,13 +71,6 @@ export function Header() {
         })}
       </nav>
       <div className={styles.secondary}>
-        <nav className={styles.sections} aria-label={t.nav.sections}>
-          {sectionLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={styles.link}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
         <div className={styles.langSwitch} role="group" aria-label={t.nav.language}>
           {locales.map((code) =>
             code === lang ? (

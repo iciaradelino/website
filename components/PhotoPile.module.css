@@ -1,0 +1,119 @@
+/* Escenario: alto de pantalla (menos la cabecera) o lo que mida la cuadrícula. */
+.stage {
+  position: relative;
+  height: calc(100svh - 64px);
+  overflow: clip;
+  perspective: 1400px;
+  user-select: none;
+}
+
+.stack {
+  cursor: pointer;
+}
+
+/* En la vista ampliada las fotos se colocan respecto a la ventana: nada se recorta. */
+.detail {
+  z-index: 60;
+  overflow: visible;
+}
+
+.card {
+  position: absolute;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-mid);
+  transform-origin: center;
+}
+
+.grid .card,
+.detail .card {
+  cursor: pointer;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 4px;
+}
+
+.photo {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: #0b0a09;
+  animation: fade 0.5s ease both;
+}
+
+/* La foto grande: una copia de la elegida, por encima de la tira. */
+.big {
+  position: fixed;
+  z-index: 65;
+  background: var(--bg-mid);
+  transform-origin: top left;
+}
+
+/* Abajo: flecha anterior, contador y flecha siguiente. */
+.detailBar {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  font-variant-numeric: tabular-nums;
+  animation: fade 0.5s 0.3s ease both;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  transition: color 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
+}
+
+.iconButton:hover,
+.iconButton:focus-visible {
+  color: var(--accent-light);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.iconButton:disabled {
+  opacity: 0.25;
+  cursor: default;
+  background: none;
+  color: inherit;
+}
+
+/* La X para cerrar, arriba a la derecha. */
+.close {
+  position: fixed;
+  top: 1rem;
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 70;
+  animation: fade 0.5s 0.3s ease both;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .detailBar,
+  .close {
+    animation: none;
+  }
+}

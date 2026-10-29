@@ -13,7 +13,14 @@
     background 0.35s ease,
     backdrop-filter 0.35s ease,
     border-color 0.35s ease,
-    box-shadow 0.35s ease;
+    box-shadow 0.35s ease,
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Al bajar, la cabecera se recoge hacia arriba. */
+.hidden {
+  transform: translateY(-100%);
+  box-shadow: none;
 }
 
 .top {
@@ -43,8 +50,7 @@
 }
 
 .nav,
-.secondary,
-.sections {
+.secondary {
   display: flex;
   align-items: center;
   gap: clamp(1.25rem, 3vw, 2.5rem);
@@ -54,47 +60,51 @@
   justify-self: end;
 }
 
-/* Selector de idioma: el actual resaltado, el otro como enlace. */
+/* Selector de idioma: una cápsula con las dos opciones; la actual, rellena de verde. */
 .langSwitch {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-  padding-left: clamp(0.9rem, 2vw, 1.5rem);
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
-  font-size: clamp(0.72rem, 1vw, 0.82rem);
-  letter-spacing: 0.12em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  line-height: 1;
 }
 
 .langCurrent,
 .langOption {
-  padding: 0.2rem 0.3rem;
+  display: grid;
+  place-items: center;
+  min-width: 2.4rem;
+  padding: 0.42rem 0.55rem 0.42rem 0.69rem;
+  border-radius: 999px;
 }
 
 .langCurrent {
-  color: var(--accent-light);
-  font-weight: 700;
-}
-
-.langOption {
-  color: rgba(255, 255, 255, 0.55);
-  transition: color 0.25s ease;
-}
-
-.langOption:hover {
+  background: var(--accent);
   color: #fff;
 }
 
+.langOption {
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+.langOption:hover,
+.langOption:focus-visible {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 @media (max-width: 640px) {
-  /* Una sola fila: logo, secciones e idioma. "Sobre mí" y "contacto" siguen en el pie. */
+  /* Una sola fila: logo, secciones e idioma. */
   .header {
     grid-template-columns: auto 1fr auto;
     gap: 0.75rem;
     padding: 0 1rem;
-  }
-
-  .sections {
-    display: none;
   }
 
   .nav {
@@ -102,9 +112,10 @@
     gap: 0.9rem;
   }
 
-  .langSwitch {
-    padding-left: 0.5rem;
-    font-size: 0.72rem;
+  .langCurrent,
+  .langOption {
+    min-width: 2rem;
+    padding: 0.36rem 0.4rem 0.36rem 0.54rem;
   }
 
   .logo {
