@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
 import { PhotoPile } from "@/components/PhotoPile";
-import type { Lang } from "@/lib/i18n";
+import { StoryRows } from "@/components/StoryRows";
+import { getDictionary, type Lang } from "@/lib/i18n";
 import { getPhotos } from "@/lib/photos";
+import { getStories } from "@/lib/stories";
 import ui from "@/components/ui.module.css";
 
 type ExperimentoPageProps = {
@@ -28,6 +30,7 @@ export default async function ExperimentoPage({ params }: ExperimentoPageProps) 
       <Header />
       <main className={ui.pageMain} style={{ overflowX: "clip" }}>
         <PhotoPile photos={getPhotos(lang)} labels={labels[lang]} />
+        <StoryRows stories={getStories(lang)} title={getDictionary(lang).meta.storiesTitle} />
         <ForestFooter lang={lang} />
       </main>
     </>
