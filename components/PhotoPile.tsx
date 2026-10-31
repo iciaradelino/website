@@ -14,10 +14,14 @@ type Pose = { p: Vec; r: Vec; u: Vec; s: number; o: number };
 /** Ancho real de cada foto en el DOM; todas las posturas la escalan desde aquí. */
 const BASE = 800;
 const HEADER = 64;
-/** Cuántas fotos forman el montón inicial (el resto aparece ya en la cuadrícula). */
+/** Cuántas fotos forman la fila inicial (el resto aparece ya en la cuadrícula). */
 const PILE_COUNT = 10;
-/** Cada cuánto aparece una foto más en el montón, en segundos. */
-const STACK_STEP = 0.22;
+/** Lo que tarda la fila en entrar en la pantalla desde la izquierda, en segundos. */
+const ROW_ENTRY = 1.4;
+/** A cuántas fotos por segundo avanza la onda por la fila, de derecha a izquierda. */
+const ROW_WAVE_SPEED = 7;
+/** Cuántas fotos se salen de la fila a la vez, como mucho. */
+const ROW_WAVE_SPAN = 4;
 /** Duración del paso de una vista a otra, en segundos. */
 const DURATION = 1.1;
 /** Cuánto sale hacia la derecha la foto elegida en la tira, y lo ancha que es la onda. */
@@ -103,8 +107,8 @@ function Icon({ name }: { name: keyof typeof icons }) {
 }
 
 /**
- * Experimento: al cargar, las primeras fotos aparecen una encima de otra en un
- * montón y luego se ordenan en la cuadrícula, donde aparecen las demás. Un clic
+ * Experimento: al cargar, las primeras fotos entran en fila, una tras otra, y
+ * una onda la recorre; luego se ordenan en la cuadrícula, donde aparecen las demás. Un clic
  * en una foto la amplía y el resto se coloca en una tira vertical que ondula al
  * desplazarse.
  */
@@ -133,8 +137,14 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
     wave: 0,
     lastWheel: 0,
   });
-  const layout = useRef({ w: 0, h: 0, slots: [] as number[], thumb: 0 });
-  // Fotos del montón ya cargadas; el montón empieza cuando están todas.
+  const layout = useRef({
+    w: 0,
+    h: 0,
+    slots: [] as number[],
+    thumb: 0,
+    row: [] as { x: number; width: number }[],
+  });
+  // Fotos de la fila ya cargadas; la fila empieza cuando están todas.
   const loaded = useRef(new Set<number>());
   const pileCount = Math.min(PILE_COUNT, n);
   const onAllLoaded = useRef<() => void>(() => {});
@@ -158,7 +168,7 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
     const fromStack = a.mode === "stack";
     const cells = masonry(ratios, layout.current.w).cells;
     a.from = a.current.map((pose, i) => {
-      // Las que no estaban en el montón aparecen ya en su hueco de la cuadrícula.
+      // Las que no estaban en la fila aparecen ya en su hueco de la cuadrícula.
       if (fromStack && i >= pileCount) {
         const cell = cells[i];
         return flat(cell.x, cell.y + 24, cell.w, 0, 0, 0);
@@ -169,8 +179,8 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
       if (reduced) return now - DURATION;
       if (next === "detail") return now + Math.abs(i - focus) * 0.025;
       if (fromStack) {
-        // Del montón salen primero las de arriba; luego van apareciendo las demás.
-        if (i < pileCount) return now + ((pileCount - 1 - i) / pileCount) * 0.4;
+        // De la fila salen de izquierda a derecha; luego van apareciendo las demás.
+        if (i < pileCount) return now + (i / pileCount) * 0.4;
         return now + 0.6 + (i - pileCount) * 0.04;
       }
       return now + (((i * 37) % n) / n) * 0.4;
@@ -244,42 +254,63 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
         y += thumb * ratio + 16;
         return center;
       });
-      layout.current = { w, h, slots, thumb };
+      // Fila inicial: todas a la misma altura, centradas y, si caben, a lo ancho de la pantalla.
+      const gap = clamp(w * 0.012, 8, 16);
+      const widths = ratios.slice(0, pileCount).map((ratio) => 1 / ratio);
+      const sum = widths.reduce((total, width) => total + width, 0);
+      const rowH = clamp((w * 0.84 - gap * (pileCount - 1)) / sum, 56, h * 0.34);
+      let x = w / 2 - (rowH * sum + gap * (pileCount - 1)) / 2;
+      const row = widths.map((width) => {
+        const cell = { x: x + (rowH * width) / 2, width: rowH * width };
+        x += rowH * width + gap;
+        return cell;
+      });
+      layout.current = { w, h, slots, thumb, row };
     };
     measure();
     window.addEventListener("resize", measure);
 
-    // Montón inicial: cada foto aparece de golpe encima de la anterior, un poco girada.
-    const pile = (i: number) => {
-      const { w, h } = layout.current;
-      const area = Math.min(w, h) * 0.42;
-      const width = area / Math.sqrt(ratios[i]);
-      const angle = (((i * 53) % 17) / 17 - 0.5) * 0.22;
-      const jx = (((i * 29) % 11) / 11 - 0.5) * 28;
-      const jy = (((i * 41) % 13) / 13 - 0.5) * 20;
-      return flat(w / 2 + jx, h / 2 + jy, width, angle, i * 0.5);
+    // Fila inicial: entra entera desde la izquierda y luego una onda la recorre
+    // desde la foto de la derecha; solo unas pocas fotos se salen de la fila a la vez.
+    let waveStart = Infinity;
+    const waveTime = (pileCount + ROW_WAVE_SPAN) / ROW_WAVE_SPEED;
+    const pile = (i: number, now = 0) => {
+      const { w, h, row } = layout.current;
+      const cell = row[i];
+      if (!cell) return flat(w / 2, h / 2, 1, 0, 0, 0);
+      // La cresta empieza justo a la derecha de la última foto y avanza hacia la izquierda.
+      const t = Number.isFinite(waveStart) && !reduced ? now - waveStart : -1;
+      const crest = pileCount - 1 + ROW_WAVE_SPAN / 2 - t * ROW_WAVE_SPEED;
+      const d = (i - crest) / (ROW_WAVE_SPAN / 2);
+      const lift = t >= 0 && Math.abs(d) < 1 ? Math.cos((d * Math.PI) / 2) ** 2 : 0;
+      // Al subir se inclina hacia la izquierda y al bajar hacia la derecha, siguiendo la onda.
+      const slope = t >= 0 && Math.abs(d) < 1 ? -Math.sin(d * Math.PI) : 0;
+      const amp = h * 0.12;
+      return flat(cell.x, h / 2 - amp * lift, cell.width, slope * 0.12, lift * 60);
     };
     a.current = list.map((_, i) => ({ ...pile(i), o: 0 }));
-    a.from = list.map((_, i) => {
-      // Al aparecer, un pelín más grande, como si se dejara caer encima.
-      const pose = pile(i);
-      return { ...pose, s: pose.s * 1.05 };
-    });
     a.start = list.map(() => Infinity);
-    a.duration = list.map(() => (reduced ? 0.001 : 0.3));
+    a.duration = list.map(() => (reduced ? 0.001 : ROW_ENTRY));
     a.bump = list.map(() => 0);
 
-    // El montón empieza cuando han cargado sus fotos (o, como mucho, a los 4 s).
+    // La fila empieza cuando han cargado sus fotos (o, como mucho, a los 4 s).
     let toGrid = 0;
     const begin = () => {
       if (toGrid) return;
       const now = performance.now() / 1000;
-      a.start = list.map((_, i) =>
-        i < pileCount ? now + (reduced ? -1 : i * STACK_STEP) : Infinity,
-      );
+      // Toda la fila sale de fuera de la pantalla, por la izquierda, y entra a la vez.
+      const { row } = layout.current;
+      const last = row[pileCount - 1];
+      const offscreen = last ? last.x + last.width / 2 + 40 : 0;
+      a.from = list.map((_, i) => {
+        const pose = pile(i);
+        return { ...pose, p: [pose.p[0] - offscreen, pose.p[1], pose.p[2]] as Vec };
+      });
+      a.start = list.map((_, i) => (i < pileCount ? now + (reduced ? -1 : 0) : Infinity));
+      waveStart = now + ROW_ENTRY + 0.15;
       toGrid = window.setTimeout(
         () => go("grid"),
-        reduced ? 0 : (pileCount * STACK_STEP + 0.9) * 1000,
+        reduced ? 0 : (ROW_ENTRY + 0.15 + waveTime + 0.2) * 1000,
       );
     };
     onAllLoaded.current = begin;
@@ -327,7 +358,7 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
       const target = (i: number): Pose => {
         switch (a.mode) {
           case "stack":
-            return pile(i);
+            return pile(i, now);
           case "grid": {
             const cell = grid.cells[i];
             return flat(cell.x, cell.y, cell.w);
@@ -348,7 +379,7 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
       list.forEach((_, i) => {
         const el = cardRefs.current[i];
         if (!el) return;
-        // En el montón, cada foto está oculta hasta que le toca aparecer.
+        // En la fila, cada foto está oculta hasta que le toca entrar.
         if (now < a.start[i] && a.mode === "stack") {
           el.style.opacity = "0";
           return;
@@ -467,7 +498,7 @@ export function PhotoPile({ photos, labels }: PhotoPileProps) {
               alt=""
               fill
               sizes="1200px"
-              // Todas se ven desde el primer momento, en el montón.
+              // Todas se ven desde el primer momento, en la fila.
               loading="eager"
               onLoad={(event) => onPhotoLoad(i, event.currentTarget)}
               draggable={false}
