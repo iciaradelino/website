@@ -11,7 +11,7 @@
   --nav-tint: rgba(255, 255, 255, 0.3);
   --footer-bg: #000;
   --font: var(--font-sans), "Source Sans 3", system-ui, sans-serif;
-  --font-serif: var(--font-literata), "Literata", "Palatino Linotype", Palatino, serif;
+  --font-serif: var(--font-geist-serif-regular), "Geist Serif", "Times New Roman", serif;
   --page-pad-x: clamp(2rem, 8vw, 7.5rem);
 }
 

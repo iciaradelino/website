@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Literata, Source_Sans_3 } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
+import { GeistSerifRegular } from "geist/font/serif/regular";
 import { getDictionary, isLang, locales } from "@/lib/i18n";
 import "../globals.css";
 
@@ -8,13 +9,6 @@ const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-sans",
-  display: "swap",
-});
-
-const literata = Literata({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-literata",
   display: "swap",
 });
 
@@ -44,7 +38,7 @@ export default async function RootLayout({ children, params }: Readonly<LayoutPr
   if (!isLang(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${sourceSans.variable} ${literata.variable}`}>
+    <html lang={lang} className={`${sourceSans.variable} ${GeistSerifRegular.variable}`}>
       <body className={sourceSans.className}>{children}</body>
     </html>
   );
