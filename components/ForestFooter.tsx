@@ -19,8 +19,7 @@ export function ForestFooter({ lang }: { lang: Lang }) {
   ];
 
   const contact = [
-    { href: "mailto:gonzalogallego@gmail.com", label: "gonzalogallego@gmail.com" },
-    { href: "tel:+34676676767", label: "+34 676 67 67 67" },
+    { href: "mailto:yukan.photography@gmail.com", label: "yukan.photography@gmail.com" },
     {
       href: "https://www.linkedin.com/in/gonzalo-gallego-hernandez-574a1638a/",
       label: "LinkedIn",

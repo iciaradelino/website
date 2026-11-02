@@ -47,14 +47,14 @@
 .text {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  max-width: 34rem;
+  gap: 1rem;
+  max-width: 40rem;
 }
 
 /* El saludo, en grande: el mismo título de la portada. */
 .hello {
   margin: 0 0 0.5rem;
-  font-size: clamp(2.2rem, 4.6vw, 3.75rem);
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
   letter-spacing: 0.08em;
   line-height: 1.1;
 }
@@ -62,8 +62,8 @@
 .lead {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
-  line-height: 1.5;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.45;
   text-wrap: pretty;
 }
 
@@ -74,13 +74,15 @@
 
 .body {
   margin: 0;
-  font-size: clamp(1rem, 1.3vw, 1.1rem);
-  line-height: 1.7;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.65;
+  text-wrap: pretty;
   color: rgba(244, 241, 234, 0.78);
 }
 
 @media (min-width: 960px) {
   .grid {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    /* El texto es largo: le toca casi la mitad, para que no quede mucho más alto que la foto. */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   }
 }

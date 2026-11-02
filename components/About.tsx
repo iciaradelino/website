@@ -32,9 +32,11 @@ export function About({ lang }: { lang: Lang }) {
           <Reveal as="p" className={styles.lead} delayMs={120}>
             {t.leadStart} <em>{t.leadEm}</em>.
           </Reveal>
-          <Reveal as="p" className={styles.body} delayMs={180}>
-            {t.body}
-          </Reveal>
+          {t.body.map((paragraph, i) => (
+            <Reveal key={i} as="p" className={styles.body} delayMs={180 + i * 60}>
+              {paragraph}
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

@@ -81,10 +81,13 @@ const es = {
   },
   about: {
     kicker: "Sobre mí",
-    hello: "Hola, soy Gonzalo",
-    leadStart: "Escritor y caminante. Nací entre montañas y aprendí a contar",
-    leadEm: "historias que huelen a tierra húmeda",
-    body: "Busco lo cotidiano que se vuelve misterio —una cena, un tren, un bosque sin nombre— y lo cuento con palabras, fotos y vídeo.",
+    hello: "¡Hola! Soy Gonzalo",
+    leadStart: "Mi trabajo se mueve entre tres pasiones:",
+    leadEm: "la fotografía, la escritura y el cine",
+    body: [
+      "Llevo años desarrollando proyectos propios, desde series fotográficas hasta guiones y piezas audiovisuales, y con cada uno he ido aprendiendo y mejorando. Hasta ahora compartía casi todo en Instagram, pero quería un espacio propio donde enseñarlo mejor. Por eso he creado esta web, y me hace mucha ilusión que estés aquí.",
+      "Si te interesa colaborar, tienes un encargo en mente o simplemente quieres comentarme algo, escríbeme sin problema a través del apartado de contacto. ¡Estaré encantado de hablar contigo!",
+    ],
     photoAlt: "Gonzalo con una cámara entre hierbas altas al atardecer",
   },
   footer: {
@@ -166,10 +169,13 @@ const en: Dictionary = {
   },
   about: {
     kicker: "About me",
-    hello: "Hi, I'm Gonzalo",
-    leadStart: "Writer and wanderer. I was born among mountains and learned to tell",
-    leadEm: "stories that smell of damp earth",
-    body: "I look for the everyday that turns into mystery —a dinner, a train, a nameless forest— and I tell it with words, photos and video.",
+    hello: "Hi! I'm Gonzalo",
+    leadStart: "My work moves between three passions:",
+    leadEm: "photography, writing and film",
+    body: [
+      "I've spent years developing my own projects, from photo series to scripts and audiovisual pieces, and with each one I've kept learning and improving. Until now I shared almost everything on Instagram, but I wanted a space of my own to show it better. That's why I made this website, and I'm really glad you're here.",
+      "If you'd like to collaborate, have a commission in mind or just want to tell me something, feel free to write to me through the contact section. I'd be delighted to talk with you!",
+    ],
     photoAlt: "Gonzalo holding a camera among tall grass at sunset",
   },
   footer: {
