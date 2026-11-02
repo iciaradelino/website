@@ -9,6 +9,8 @@
   /* Nunca más alto que la pantalla: al llegar al final se ve entero, desde la línea de arriba. */
   min-height: min(clamp(560px, 62vw, 820px), 100svh);
   overflow: hidden;
+  /* Alto natural del dibujo (1600×620) a todo el ancho: por debajo de esto, las copas se recortan. */
+  --forest-h: calc(100vw * 620 / 1600);
   background: var(--paper);
   color: var(--ink);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -161,9 +163,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 62%;
+  height: max(62%, var(--forest-h));
   background: url("/footer-forest.svg") center bottom / cover no-repeat;
   pointer-events: none;
+}
+
+/* En pantallas anchas el pie crece lo justo para que el bosque quepa entero bajo el texto. */
+@media (min-width: 761px) {
+  .footer {
+    min-height: max(min(clamp(560px, 62vw, 820px), 100svh), calc(16rem + var(--forest-h)));
+  }
 }
 
 @media (max-width: 760px) {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/Footer";
+import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { Reveal } from "@/components/Reveal";
@@ -42,9 +42,7 @@ export default async function FotosPage({ params }: FotosPageProps) {
             <PhotoGrid photos={getPhotos(lang)} />
           </div>
         </section>
-        <Reveal>
-          <Footer lang={lang} />
-        </Reveal>
+        <ForestFooter lang={lang} />
       </main>
     </>
   );

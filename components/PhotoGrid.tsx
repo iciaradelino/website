@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Lightbox } from "@/components/Lightbox";
 import { Reveal } from "@/components/Reveal";
+import { WaveViewer } from "@/components/WaveViewer";
 import type { Photo } from "@/lib/photos";
 import { useDictionary } from "@/lib/useLang";
 import styles from "./PhotoGrid.module.css";
@@ -44,7 +45,18 @@ export function PhotoGrid({ photos, layout = "columns" }: PhotoGridProps) {
   // Solo las fotos con imagen se pueden ampliar.
   const viewable = photos.filter((photo) => photo.src);
   const [open, setOpen] = useState<number | null>(null);
+  // En pantallas anchas la foto se amplía junto a una tira que ondula; en el móvil, en el visor normal.
+  const [wave, setWave] = useState<{ index: number; origin: DOMRect } | null>(null);
   const t = useDictionary().photos;
+
+  const enlarge = (photo: Photo, button: HTMLElement) => {
+    const index = viewable.indexOf(photo);
+    if (window.matchMedia("(min-width: 720px)").matches) {
+      setWave({ index, origin: button.getBoundingClientRect() });
+    } else {
+      setOpen(index);
+    }
+  };
 
   const renderFigure = (photo: Photo, sizes: string) => (
     <figure className={styles.figure}>
@@ -52,7 +64,7 @@ export function PhotoGrid({ photos, layout = "columns" }: PhotoGridProps) {
         <button
           type="button"
           className={styles.zoom}
-          onClick={() => setOpen(viewable.indexOf(photo))}
+          onClick={(event) => enlarge(photo, event.currentTarget)}
           aria-label={t.enlarge(photo.alt)}
         >
           <Image
@@ -116,6 +128,12 @@ export function PhotoGrid({ photos, layout = "columns" }: PhotoGridProps) {
         </div>
       )}
       <Lightbox photos={viewable} index={open} onChange={setOpen} />
+      <WaveViewer
+        photos={viewable}
+        index={wave?.index ?? null}
+        origin={wave?.origin}
+        onClose={() => setWave(null)}
+      />
     </>
   );
 }

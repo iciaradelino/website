@@ -3,7 +3,7 @@ import { getDictionary, localePath, type Lang } from "@/lib/i18n";
 import styles from "./ForestFooter.module.css";
 
 /**
- * Experimento: pie de página con columnas separadas por líneas discontinuas y
+ * Pie de página de todo el sitio: columnas separadas por líneas discontinuas y
  * un bosque dibujado a plumilla que sube desde abajo.
  */
 export function ForestFooter({ lang }: { lang: Lang }) {

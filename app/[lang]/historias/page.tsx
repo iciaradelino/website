@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/Footer";
+import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
-import { StoryGrid } from "@/components/StoryGrid";
+import { StoryRows } from "@/components/StoryRows";
 import { getDictionary, type Lang } from "@/lib/i18n";
 import { getStories } from "@/lib/stories";
 import ui from "@/components/ui.module.css";
@@ -27,7 +27,7 @@ export default async function HistoriasPage({ params }: HistoriasPageProps) {
   return (
     <>
       <Header />
-      <main className={ui.pageMain}>
+      <main className={ui.pageMain} style={{ overflowX: "clip" }}>
         <section id="stories" className={ui.section}>
           <div className={ui.inner}>
             <header className={styles.intro}>
@@ -38,12 +38,10 @@ export default async function HistoriasPage({ params }: HistoriasPageProps) {
                 {t.stories.pageSubtitle}
               </Reveal>
             </header>
-            <StoryGrid lang={lang} stories={getStories(lang)} />
           </div>
+          <StoryRows stories={getStories(lang)} />
         </section>
-        <Reveal>
-          <Footer lang={lang} />
-        </Reveal>
+        <ForestFooter lang={lang} />
       </main>
     </>
   );

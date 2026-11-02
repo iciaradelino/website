@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Footer } from "@/components/Footer";
+import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
 import { StoryIndex } from "@/components/StoryIndex";
@@ -95,9 +95,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
           </div>
         </section>
 
-        <Reveal>
-          <Footer lang={lang} />
-        </Reveal>
+        <ForestFooter lang={lang} />
       </main>
     </>
   );

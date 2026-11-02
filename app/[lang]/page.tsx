@@ -4,7 +4,7 @@ import { useEffect, useMemo, type ReactNode } from "react";
 import Link from "next/link";
 import { About } from "@/components/About";
 import { ScreeningRoom } from "@/components/Corto";
-import { Footer } from "@/components/Footer";
+import { ForestFooter } from "@/components/ForestFooter";
 import { GalleryWall } from "@/components/GalleryWall";
 import { Header } from "@/components/Header";
 import { PhotoWall } from "@/components/PhotoWall";
@@ -120,9 +120,7 @@ export default function HomePage() {
 
         <About lang={lang} />
 
-        <Reveal>
-          <Footer lang={lang} />
-        </Reveal>
+        <ForestFooter lang={lang} />
       </main>
     </>
   );

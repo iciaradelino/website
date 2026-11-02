@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/Footer";
+import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
 import { getDictionary, type Lang } from "@/lib/i18n";
@@ -31,9 +31,7 @@ export default async function CortosPage({ params }: CortosPageProps) {
             {t.cortos.soonTitle}
           </Reveal>
         </section>
-        <Reveal>
-          <Footer lang={lang} />
-        </Reveal>
+        <ForestFooter lang={lang} />
       </main>
     </>
   );

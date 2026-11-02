@@ -1,0 +1,122 @@
+/* Todo se coloca respecto a la ventana, por encima de la página. */
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  user-select: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: #0b0a09;
+  animation: fade 0.5s ease both;
+}
+
+/* Las fotos de la tira: su posición la fija la onda en cada fotograma. */
+.thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-mid);
+  cursor: pointer;
+  will-change: transform;
+  animation: fade 0.6s 0.15s ease both;
+}
+
+.photo {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* La foto grande, a la derecha de la tira. */
+.big {
+  position: fixed;
+  z-index: 1;
+  background: var(--bg-mid);
+  transform-origin: top left;
+}
+
+/* La versión nítida aparece encima de la de la tira en cuanto carga. */
+.sharp {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.sharp.loaded {
+  opacity: 1;
+}
+
+/* Abajo: flecha anterior, contador y flecha siguiente. */
+.bar {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transform: translateX(-50%);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  font-variant-numeric: tabular-nums;
+  animation: fade 0.5s 0.3s ease both;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  transition: color 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
+}
+
+.iconButton:hover,
+.iconButton:focus-visible {
+  color: var(--accent-light);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+.iconButton:disabled {
+  opacity: 0.25;
+  cursor: default;
+  background: none;
+  color: inherit;
+}
+
+/* La X para cerrar, arriba a la derecha. */
+.close {
+  position: fixed;
+  top: 1rem;
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 2;
+  animation: fade 0.5s 0.3s ease both;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .thumb,
+  .bar,
+  .close {
+    animation: none;
+  }
+
+  .sharp {
+    transition: none;
+  }
+}

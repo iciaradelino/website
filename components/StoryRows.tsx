@@ -49,7 +49,8 @@ function excerptSize(excerpt: string) {
 
 type StoryRowsProps = {
   stories: Story[];
-  title: string;
+  /** Sin título, las franjas van sin cabecera (la página ya trae la suya). */
+  title?: string;
 };
 
 /**
@@ -115,13 +116,18 @@ export function StoryRows({ stories, title }: StoryRowsProps) {
   }, []);
 
   return (
-    <section className={styles.section} aria-labelledby="story-rows-title">
-      <header className={styles.heading}>
-        <h2 id="story-rows-title" className={styles.title}>
-          {title}
-        </h2>
-        <span className={styles.count}>{String(stories.length).padStart(2, "0")}</span>
-      </header>
+    <section
+      className={title ? styles.section : undefined}
+      aria-labelledby={title ? "story-rows-title" : undefined}
+    >
+      {title ? (
+        <header className={styles.heading}>
+          <h2 id="story-rows-title" className={styles.title}>
+            {title}
+          </h2>
+          <span className={styles.count}>{String(stories.length).padStart(2, "0")}</span>
+        </header>
+      ) : null}
       <ol
         ref={listRef}
         className={styles.list}
