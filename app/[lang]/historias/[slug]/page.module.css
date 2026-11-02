@@ -21,7 +21,6 @@
   margin: 0;
   font-size: clamp(1.85rem, 4vw, 3rem);
   font-weight: 400;
-  letter-spacing: 0.12em;
   line-height: 1.2;
 }
 
@@ -107,5 +106,4 @@
   margin: 0 0 clamp(2.25rem, 4.5vw, 3.75rem);
   font-size: clamp(1.6rem, 3.5vw, 2.5rem);
   font-weight: 400;
-  letter-spacing: 0.12em;
 }

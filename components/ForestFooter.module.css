@@ -58,7 +58,6 @@
   margin: 0;
   font-family: var(--font-serif);
   font-size: clamp(1.8rem, 3vw, 2.6rem);
-  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1;
 }
@@ -98,7 +97,6 @@
   margin: 0;
   font-family: var(--font-serif);
   font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-  letter-spacing: 0.08em;
 }
 
 .links {

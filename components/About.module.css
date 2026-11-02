@@ -55,7 +55,6 @@
 .hello {
   margin: 0 0 0.5rem;
   font-size: clamp(2rem, 3.8vw, 3.25rem);
-  letter-spacing: 0.08em;
   line-height: 1.1;
 }
 
