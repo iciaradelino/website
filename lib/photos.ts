@@ -28,16 +28,6 @@ const entries: PhotoEntry[] = [
     height: 1600,
   },
   {
-    id: "117",
-    src: "/fotos/teatro-letreros.jpg",
-    alt: {
-      es: "Fachada de un teatro con letreros de colores",
-      en: "Theater facade with colorful signs",
-    },
-    width: 734,
-    height: 1326,
-  },
-  {
     id: "13",
     src: "/fotos/tienda-sombreros.jpg",
     alt: {
@@ -326,6 +316,16 @@ const entries: PhotoEntry[] = [
     },
     width: 1582,
     height: 837,
+  },
+  {
+    id: "117",
+    src: "/fotos/teatro-letreros.jpg",
+    alt: {
+      es: "Fachada de un teatro con letreros de colores",
+      en: "Theater facade with colorful signs",
+    },
+    width: 734,
+    height: 1326,
   },
   {
     id: "88",
