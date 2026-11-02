@@ -118,16 +118,6 @@ const entries: PhotoEntry[] = [
     height: 900,
   },
   {
-    id: "14",
-    src: "/fotos/carretera-atardecer.jpg",
-    alt: {
-      es: "Carretera recta que atraviesa una llanura al atardecer",
-      en: "Straight road crossing a plain at sunset",
-    },
-    width: 1600,
-    height: 900,
-  },
-  {
     id: "114",
     src: "/fotos/desierto-rojo.jpg",
     alt: {
@@ -136,6 +126,16 @@ const entries: PhotoEntry[] = [
     },
     width: 1230,
     height: 530,
+  },
+  {
+    id: "14",
+    src: "/fotos/carretera-atardecer.jpg",
+    alt: {
+      es: "Carretera recta que atraviesa una llanura al atardecer",
+      en: "Straight road crossing a plain at sunset",
+    },
+    width: 1600,
+    height: 900,
   },
   {
     id: "76",
@@ -887,6 +887,16 @@ const entries: PhotoEntry[] = [
     height: 900,
   },
   {
+    id: "51",
+    src: "/fotos/luna-arboles.jpg",
+    alt: {
+      es: "Luna creciente en un cielo violeta sobre siluetas de árboles al anochecer",
+      en: "Crescent moon in a violet sky above tree silhouettes at dusk",
+    },
+    width: 863,
+    height: 1300,
+  },
+  {
     id: "85",
     src: "/fotos/edificio-bruma.jpg",
     alt: {
@@ -1264,16 +1274,6 @@ const entries: PhotoEntry[] = [
       en: "A lone streetlight beside a railing at night",
     },
     width: 1071,
-    height: 1600,
-  },
-  {
-    id: "51",
-    src: "/fotos/luna-arboles.jpg",
-    alt: {
-      es: "Luna creciente en un cielo violeta sobre siluetas de árboles al anochecer",
-      en: "Crescent moon in a violet sky above tree silhouettes at dusk",
-    },
-    width: 1028,
     height: 1600,
   },
 ];
