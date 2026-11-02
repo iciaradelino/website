@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
-import { Reveal } from "@/components/Reveal";
 import { StoryRows } from "@/components/StoryRows";
+import { TypedIntro } from "@/components/TypedIntro";
+import { TypedTitle } from "@/components/TypedTitle";
 import { getDictionary, type Lang } from "@/lib/i18n";
 import { getStories } from "@/lib/stories";
 import ui from "@/components/ui.module.css";
-import styles from "./page.module.css";
 
 type HistoriasPageProps = {
   params: Promise<{ lang: Lang }>;
@@ -28,20 +28,20 @@ export default async function HistoriasPage({ params }: HistoriasPageProps) {
     <>
       <Header />
       <main className={ui.pageMain} style={{ overflowX: "clip" }}>
-        <section id="stories" className={ui.section}>
-          <div className={ui.inner}>
-            <header className={styles.intro}>
-              <Reveal as="h1" className={styles.title}>
-                {t.stories.pageTitle}
-              </Reveal>
-              <Reveal as="p" className={styles.subtitle} delayMs={100}>
-                {t.stories.pageSubtitle}
-              </Reveal>
-            </header>
-          </div>
-          <StoryRows stories={getStories(lang)} />
-        </section>
-        <ForestFooter lang={lang} />
+        <TypedIntro>
+          <section id="stories" className={ui.section}>
+            <div className={ui.inner}>
+              <header className={`${ui.pageHeader} ${ui.pageHeaderPlain}`}>
+                <TypedTitle
+                  text={t.stories.pageTitle}
+                  className={`${ui.pageHeading} ${ui.pageHeadingOneLine}`}
+                />
+              </header>
+            </div>
+            <StoryRows stories={getStories(lang)} />
+          </section>
+          <ForestFooter lang={lang} />
+        </TypedIntro>
       </main>
     </>
   );

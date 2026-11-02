@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
 import { PhotoGrid } from "@/components/PhotoGrid";
-import { Reveal } from "@/components/Reveal";
 import { getDictionary, type Lang } from "@/lib/i18n";
 import { getPhotos } from "@/lib/photos";
 import ui from "@/components/ui.module.css";
@@ -29,16 +28,9 @@ export default async function FotosPage({ params }: FotosPageProps) {
       <main className={ui.pageMain}>
         <section className={ui.section}>
           <div className={ui.inner}>
-            <div className={ui.headingRow}>
-              <div>
-                <Reveal as="h1" className={ui.pageTitle}>
-                  {t.photos.pageTitle}
-                </Reveal>
-                <Reveal as="p" className={ui.lede} delayMs={80}>
-                  {t.photos.lede}
-                </Reveal>
-              </div>
-            </div>
+            <header className={ui.pageHeader}>
+              <h1 className={ui.pageHeading}>{t.photos.pageTitle}</h1>
+            </header>
             <PhotoGrid photos={getPhotos(lang)} />
           </div>
         </section>

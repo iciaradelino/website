@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { Reveal } from "@/components/Reveal";
 import { storyExcerpt, storyPath, type Story } from "@/lib/stories";
 import { useDictionary, useLang } from "@/lib/useLang";
@@ -155,7 +155,12 @@ export function StoryRows({ stories, title }: StoryRowsProps) {
           const background = backgrounds[story.slug];
           const excerpt = storyExcerpt(story);
           return (
-            <li key={story.id} data-row className={`${styles.row} ${index % 2 ? styles.right : ""}`}>
+            <li
+              key={story.id}
+              data-row
+              className={`${styles.row} ${index % 2 ? styles.right : ""}`}
+              style={{ "--i": index } as CSSProperties}
+            >
               <Link href={storyPath(lang, story.slug)} className={styles.link}>
                 {background ? (
                   <span className={styles.backdrop} aria-hidden>

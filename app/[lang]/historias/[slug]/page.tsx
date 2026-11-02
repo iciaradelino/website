@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
-import { Reveal } from "@/components/Reveal";
-import { StoryIndex } from "@/components/StoryIndex";
 import { formatDate, getDictionary, locales, type Lang } from "@/lib/i18n";
-import { getOtherStories, getStory, isSectionBreak, storySlugs } from "@/lib/stories";
+import { getStory, isSectionBreak, storySlugs } from "@/lib/stories";
 import styles from "./page.module.css";
 
 type StoryPageProps = {
@@ -37,8 +35,6 @@ export default async function StoryPage({ params }: StoryPageProps) {
   const t = getDictionary(lang);
   const story = getStory(lang, slug);
   if (!story) notFound();
-
-  const others = getOtherStories(lang, slug);
 
   return (
     <>
@@ -79,15 +75,6 @@ export default async function StoryPage({ params }: StoryPageProps) {
             ) : null}
           </div>
         </article>
-
-        <section className={styles.others} aria-label={t.stories.others}>
-          <div className={styles.inner}>
-            <Reveal as="h2" className={styles.sectionTitle}>
-              {t.stories.others}
-            </Reveal>
-            <StoryIndex stories={others} />
-          </div>
-        </section>
 
         <ForestFooter lang={lang} />
       </main>

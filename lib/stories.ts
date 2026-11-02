@@ -279,12 +279,6 @@ export function getStory(lang: Lang, slug: string) {
   return getStories(lang).find((story) => story.slug === slug);
 }
 
-export function getOtherStories(lang: Lang, slug: string, limit = 3) {
-  return getStories(lang)
-    .filter((story) => story.slug !== slug)
-    .slice(0, limit);
-}
-
 export const storySlugs = originals.map((story) => story.slug);
 
 /** Separadores como «—oo0oo—» que dividen una historia en partes. */

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ForestFooter } from "@/components/ForestFooter";
 import { Header } from "@/components/Header";
-import { Reveal } from "@/components/Reveal";
 import { getDictionary, type Lang } from "@/lib/i18n";
 import ui from "@/components/ui.module.css";
 import styles from "./page.module.css";
@@ -27,9 +26,7 @@ export default async function CortosPage({ params }: CortosPageProps) {
       <Header />
       <main className={ui.pageMain}>
         <section className={styles.soon}>
-          <Reveal as="h1" className={ui.pageTitle}>
-            {t.cortos.soonTitle}
-          </Reveal>
+          <h1 className={ui.pageHeading}>{t.cortos.soonTitle}</h1>
         </section>
         <ForestFooter lang={lang} />
       </main>

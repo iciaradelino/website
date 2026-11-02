@@ -96,14 +96,3 @@
   text-align: justify;
   hyphens: auto;
 }
-
-.others {
-  background: #000;
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
-}
-
-.sectionTitle {
-  margin: 0 0 clamp(2.25rem, 4.5vw, 3.75rem);
-  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-  font-weight: 400;
-}
